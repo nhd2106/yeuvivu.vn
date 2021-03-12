@@ -88,6 +88,7 @@ export default function Post() {
   ];
   const baseUrl = BACKEND();
   const coverUrl = url ? `${baseUrl}${url}` : "";
+  const imageSeo = postDetails && postDetails.anhGioiThieu ? postDetails.anhGioiThieu.url : '';
   const SEO = {
     title: postDetails ? postDetails.tieuDe : '',
     openGraph: {
@@ -96,7 +97,14 @@ export default function Post() {
       locale: 'vi_VN',
       url: `https://yeuvivu.vn${router.asPath}`,
       site_name: 'yeuvivu',
-
+      images: [
+        {
+          url: `https://yeuvivu.vn:1337${imageSeo}`,
+          width: 800,
+          height: 600,
+          alt: 'Og Image Alt',
+        },
+      ],
     }
   };
   // console.log(seo);
