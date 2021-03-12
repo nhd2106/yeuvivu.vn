@@ -112,7 +112,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="copyright">
-          <h1>Yêu Vivu</h1>
+          <h2>Yêu Vivu</h2>
           <span>Copyright © 2021 Yêu Vivu.</span>
         </div>
       </FooterStyles>

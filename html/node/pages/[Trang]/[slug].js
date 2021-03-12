@@ -98,15 +98,6 @@ export default function Post() {
 
       <BlogStyles>
       <Breadcrumbs slugNTitle={slugNTitle} />
-
-        {coverUrl ? (
-          <BlogCover className="cover-style">
-            <img src={coverUrl}/>
-            <div className="banner">
-              <h1>{tieuDe}</h1>
-            </div>
-          </BlogCover>
-        ) : null}
         <div className="post_info">
           <h1>{tieuDe}</h1>
           <div>
