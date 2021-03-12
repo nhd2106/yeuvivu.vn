@@ -73,6 +73,7 @@ export default function Post() {
   const postDetails = useSelector(({ blog }) => blog.postDetails);
   const tieuDe = postDetails ? postDetails.tieuDe : "";
   const { url } = postDetails && postDetails.og_image ? postDetails.og_image : "";
+  console.log(router.asPath)
   useEffect(() => {
     const theLoai = Trang;
     if(theLoai && slug) {
@@ -90,6 +91,26 @@ export default function Post() {
   const coverUrl = url ? `${baseUrl}${url}` : "";
   const SEO = {
     title: postDetails ? postDetails.tieuDe : '',
+    openGraph: {
+      type: 'Blog',
+      url: `https://www.yeuvivu.vn${router.asPath}`,
+      title: postDetails ? postDetails.tieuDe : '',
+      description: 'Open Graph Description',
+      // images: [
+      //   {
+      //     url: 'https://www.example.ie/og-image.jpg',
+      //     width: 800,
+      //     height: 600,
+      //     alt: 'Og Image Alt',
+      //   },
+      //   {
+      //     url: 'https://www.example.ie/og-image-2.jpg',
+      //     width: 800,
+      //     height: 600,
+      //     alt: 'Og Image Alt 2',
+      //   },
+      // ],
+    }
   };
   // console.log(seo);
   return (

@@ -5,7 +5,7 @@ export default {
     openGraph: {
         type: 'website',
         locale: 'vi_VN',
-        url : 'http://yeuvivu.vn/',
+        url : 'https://yeuvivu.vn/',
         site_name: 'yeuvivu',
         
     }
