@@ -1,0 +1,13 @@
+
+> next-2@0.1.0 start /usr/local/lsws/yeuvivu.vn/html/node
+> NODE_ENV=production node server.js
+
+info  - Loaded env from /usr/local/lsws/yeuvivu.vn/html/node/.env
+(node:44020) UnhandledPromiseRejectionWarning: Error: Could not find a production build in the '/usr/local/lsws/yeuvivu.vn/html/node/.next' directory. Try building your app with 'next build' before starting the production server. https://err.sh/vercel/next.js/production-start-no-build-id
+    at Server.readBuildId (/usr/local/lsws/yeuvivu.vn/html/node/node_modules/next/dist/next-server/server/next-server.js:148:355)
+    at new Server (/usr/local/lsws/yeuvivu.vn/html/node/node_modules/next/dist/next-server/server/next-server.js:3:120)
+    at NextServer.createServer (/usr/local/lsws/yeuvivu.vn/html/node/node_modules/next/dist/server/next.js:1:2745)
+    at /usr/local/lsws/yeuvivu.vn/html/node/node_modules/next/dist/server/next.js:1:3143
+    at async NextServer.prepare (/usr/local/lsws/yeuvivu.vn/html/node/node_modules/next/dist/server/next.js:1:2495)
+(node:44020) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 2)
+(node:44020) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
