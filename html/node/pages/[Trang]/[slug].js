@@ -90,6 +90,14 @@ export default function Post() {
   const coverUrl = url ? `${baseUrl}${url}` : "";
   const SEO = {
     title: postDetails ? postDetails.tieuDe : '',
+    openGraph: {
+      title: postDetails ? postDetails.tieuDe : '',
+      type: 'Blog',
+      locale: 'vi_VN',
+      url: `https://yeuvivu.vn${router.asPath}`,
+      site_name: 'yeuvivu',
+
+    }
   };
   // console.log(seo);
   return (
