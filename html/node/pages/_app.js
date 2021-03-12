@@ -84,6 +84,7 @@ function App({ Component, pageProps }) {
         />
         <link rel="icon" href="/yeuvivulogo.svg" />
         {/* <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"/>  */}
+        <meta name="google-site-verification" content="google-site-verification=dw2DXuLj4BThK7IfgcxvNgu_QBEV9VdSw_-S4cei_gU"></meta>
       </Head>
       <StylesProvider injectFirst>
         <DefaultSeo {...SEO} />
