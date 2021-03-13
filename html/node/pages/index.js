@@ -22,7 +22,7 @@ import {
 } from './api';
 
 
-export default function Home({
+function Home({
   posts,
   adsPoster1,
   adsPoster2,
@@ -81,14 +81,26 @@ export default function Home({
   );
 }
 
-export async function getStaticProps({ preview = null }) {
-  const posts = (await getAllPostsForHome(preview)) || [];
+Home.getInitialProps = async (ctx) => {
+  const posts = (await getAllPostsForHome()) || [];
   const adsPoster1 = await getAdsPoster1();
   const adsPoster2 = await getAdsPoster2();
   const profileImage = await getProfileImage();
   const groupBanner = await getGroupBanner();
-  
   return {
-    props: { posts, preview, adsPoster1, adsPoster2,  profileImage, groupBanner },
+    posts, adsPoster1, adsPoster2,  profileImage, groupBanner ,
   }
 }
+export default Home;
+
+// export async function getStaticProps({ preview = null }) {
+//   const posts = (await getAllPostsForHome(preview)) || [];
+//   const adsPoster1 = await getAdsPoster1();
+//   const adsPoster2 = await getAdsPoster2();
+//   const profileImage = await getProfileImage();
+//   const groupBanner = await getGroupBanner();
+  
+//   return {
+//     props: { posts, preview, adsPoster1, adsPoster2,  profileImage, groupBanner },
+//   }
+// }
