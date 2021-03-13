@@ -53,7 +53,7 @@ const Trang = ({posts}) => {
   const baseUrl = BACKEND();
   const classes = useStyles()
   const router = useRouter();
-  const title = router.query ? pageTitleMapping[router.query.Trang] : "";
+  const title = "Review"
   const handleTag = (mien) => {
     const { query } = router;
     router.push(`/${query.Trang}?where=${mien}`)
@@ -128,7 +128,7 @@ const Trang = ({posts}) => {
         }) => {
             const url = anhGioiThieu ? anhGioiThieu.url : "";
           return (
-            <Link href="[Trang]/[post]" as={`${router.query.Trang}/${slug}`} key={slug}>
+            <Link href={`review/${slug}`} key={slug}>
                 <a>
                 <div className="news_item " >
                 <Hidden smUp><h3>{tieuDe}</h3></Hidden>

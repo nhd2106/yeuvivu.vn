@@ -53,7 +53,7 @@ const Trang = ({posts}) => {
   const baseUrl = BACKEND();
   const classes = useStyles()
   const router = useRouter();
-  const title = router.query ? pageTitleMapping[router.query.Trang] : "";
+  const title = "Điểm đến"
   const handleTag = (mien) => {
     const { query } = router;
     router.push(`/${query.Trang}?where=${mien}`)

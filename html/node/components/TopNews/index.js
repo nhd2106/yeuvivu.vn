@@ -21,28 +21,28 @@ const Wrapper = styled.div`
   .groupBanner {
     margin: 2rem 0;
     padding: 5rem;
-    background: #FFCC00;
     display: flex;
     justify-content: center;
   }
 `;
 
-const Topnews = ({ posts }) => {
+const Topnews = ({ posts, adsPoster1, groupBanner}) => {
   const baseurl = BACKEND();
-  // const posts = useSelector(({ blog }) => blog.posts);
   const top4lastest = posts ? posts.slice(0, 4) : null;
   const top3lastest = posts ? posts.slice(1, 4) : null;
   const top6lastest = posts ? posts.slice(0, 6) : null;
   const lastest = top4lastest ? top4lastest[1] : null;
-
+  const urlImage = adsPoster1 && adsPoster1.url ? adsPoster1.url.url : '';
+  const groupBannerUrl = groupBanner && groupBanner.url ? groupBanner.url.url : '';
+  console.log(groupBannerUrl)
   return (
     <>
       <Wrapper>
         <Grid container spacing={1}>
           <Hidden smDown>
-          <Grid smDown className="groupBanner" md={12} lg={12} item>
-                Group banner
-            </Grid>
+          <Grid  className="groupBanner" md={12} lg={12} item>
+                <img src={`${baseurl}${groupBannerUrl}`} width="100%"/>
+          </Grid>
           </Hidden>
           <Grid container item xs={12} sm={12} md={9} lg={9} spacing={1}>
           <Grid className="top-news" item xs={12} sm={6} md={8} lg={8}>
@@ -120,13 +120,9 @@ const Topnews = ({ posts }) => {
             <Grid item xs={12} sm={3} md={3} lg={3}>
               <div
                 className="right_topBanner"
-                style={{
-                  backgroundColor: "#FFCC00",
-                  width: 300,
-                  height: 600,
-                }}
               >
-                <h3>top banner for instagram</h3>
+                <img src={`${baseurl}${urlImage}`} alt="lien-he-quang-cao-yeu-vivu" width="100%"
+                />
               </div>
             </Grid>
           </Hidden>

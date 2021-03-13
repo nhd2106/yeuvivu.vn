@@ -13,10 +13,22 @@ import {
 import TopNews from '../components/TopNews';
 import HomeNews from '../components/HomeNews';
 import { handlerGetAllPosts } from "../redux/actions/blog";
-import { getAllPostsForHome } from './api';
+import {
+  getAllPostsForHome,
+  getAdsPoster1,
+  getAdsPoster2,
+  getGroupBanner,
+  getProfileImage
+} from './api';
 
 
-export default function Home({ posts }) {
+export default function Home({
+  posts,
+  adsPoster1,
+  adsPoster2,
+  groupBanner,
+  profileImage
+ }) {
   const dispatch = useDispatch();
   useEffect(() => {
      dispatch(handlerGetAllPosts());
@@ -32,8 +44,22 @@ export default function Home({ posts }) {
         {/* <div className={styles.carousel}>
         </div> */}
         {/* <Carousel /> */}
-        <TopNews posts={posts}/>
-        <HomeNews posts={posts}/>
+        <TopNews
+        posts={posts}
+        adsPoster1={adsPoster1}
+        adsPoster2={adsPoster2}
+        groupBanner={groupBanner}
+        profileImage={profileImage}
+        
+        />
+        <HomeNews
+        posts={posts}
+        adsPoster1={adsPoster1}
+        adsPoster2={adsPoster2}
+        profileImage={profileImage}
+        groupBanner={groupBanner}
+        
+        />
 
       </section>
       <div
@@ -56,8 +82,13 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps({ preview = null }) {
-  const posts = (await getAllPostsForHome(preview)) || []
+  const posts = (await getAllPostsForHome(preview)) || [];
+  const adsPoster1 = await getAdsPoster1();
+  const adsPoster2 = await getAdsPoster2();
+  const profileImage = await getProfileImage();
+  const groupBanner = await getGroupBanner();
+  
   return {
-    props: { posts, preview },
+    props: { posts, preview, adsPoster1, adsPoster2,  profileImage, groupBanner },
   }
 }

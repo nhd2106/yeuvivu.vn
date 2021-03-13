@@ -138,7 +138,7 @@ export default function DNavbar({ navigations }) {
                   { title: "Điểm đến", slug: "/diem-den" },
                   { title: "Ẩm thực", slug: "/am-thuc" },
                   { title: "Lịch trình", slug: "/lich-trinh" },
-                  { title: "Riview", slug: "/review" },
+                  { title: "Review", slug: "/review" },
                   { title: "Giảm giá", slug: "/giam-gia" },
                 ].map(({ title, slug }) => {
                   return (

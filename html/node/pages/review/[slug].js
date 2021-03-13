@@ -69,7 +69,7 @@ export default function Post({ preview, post }) {
     if (post) return { __html: post.noiDung };
   }, [post]);
   const slugNTitle = [
-    { slug: `/${Trang}`, title: pageTitleMapping[Trang]},
+    { slug: '/review', title: 'Review'},
     { slug: `/${slug}`, title: tieuDe },
   ];
   const baseUrl = BACKEND();

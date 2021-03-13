@@ -61,11 +61,11 @@ const Homenews = styled.div`
  
 `;
 
-const HomeNews = ({ posts }) => {
+const HomeNews = ({ posts, adsPoster1 }) => {
   const baseUrl = BACKEND();
-  
-  // const posts = useSelector(({ blog }) => blog.posts);
   const [is_floating, setIs_floating] = useState(false);
+  const urlImage = adsPoster1 && adsPoster1.url ? adsPoster1.url.url : '';
+  console.log(urlImage)
   const toggleVisibility = () => {
     if (window.pageYOffset > 1500 && window.pageYOffset < -10) {
       setIs_floating(true);
@@ -134,23 +134,15 @@ const HomeNews = ({ posts }) => {
             <div
               className="right_topBanner"
               style={{
-                backgroundColor: "#FBE0B3",
-                width: 300,
-                height: 600,
                 marginBottom: '3rem'
               }}
             >
-              <h3>banner for ads</h3>
+              <img src={`${baseUrl}${urlImage}`} alt="lien-he-quang-cao-yeu-vivu" width="100%"/>
             </div>
             <div
               className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
-              style={{
-                backgroundColor: "#DEFBFF",
-                width: 300,
-                height: 600,
-              }}
             >
-              <h3>banner for ads</h3>
+              <img src={`${baseUrl}${urlImage}`} alt="lien-he-quang-cao-yeu-vivu" width="100%"/>
             </div>
           </div>
         </Grid>

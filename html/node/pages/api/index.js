@@ -40,6 +40,63 @@ export async function getPreviewPostBySlug(slug) {
   return data?.posts[0];
 }
 
+export async function getProfileImage() {
+  const data = await fetchAPI(
+    `
+    query {
+        socialPoster{
+               url {
+             url
+           }
+       }
+     }
+    `
+  );
+  return data?.socialPoster;
+}
+export async function getAdsPoster1() {
+  const data = await fetchAPI(
+    `
+    query {
+        adsPoster1{
+               url {
+             url
+           }
+       }
+     }
+    `
+  );
+  return data?.adsPoster1;
+}
+export async function getAdsPoster2() {
+  const data = await fetchAPI(
+    `
+    query {
+        adsPoster2{
+               url {
+             url
+           }
+       }
+     }
+    `
+  );
+  return data?.adsPoster2;
+}
+export async function getGroupBanner() {
+  const data = await fetchAPI(
+    `
+    query {
+        groupBanner{
+               url {
+             url
+           }
+       }
+     }
+    `
+  );
+  return data?.groupBanner;
+}
+
 export async function getAllPostsWithSlug() {
   const data = await fetchAPI(`
       {

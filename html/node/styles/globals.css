@@ -68,7 +68,7 @@ a {
 }
 @media (min-width: 1201px ) {
   .container {
-    width: 50%;
+    width: 60%;
     margin: auto;
   }
 }
