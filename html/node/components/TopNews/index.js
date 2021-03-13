@@ -40,7 +40,7 @@ const Topnews = ({ posts }) => {
       <Wrapper>
         <Grid container spacing={1}>
           <Hidden smDown>
-          <Grid smDown className="groupBanner" md={12} lg={12}>
+          <Grid smDown className="groupBanner" md={12} lg={12} item>
                 Group banner
             </Grid>
           </Hidden>

@@ -143,7 +143,7 @@ export default function DNavbar({ navigations }) {
                 ].map(({ title, slug }) => {
                   return (
                     <Hidden smDown key={slug}>
-                      <Link href='/[Trang]' as={`${slug}`}>
+                      <Link href={`${slug}`}>
                         <a
                           className={clsx(`${classes.linkMargin} `, {
                             active: currentSlug === `/${slug}`,

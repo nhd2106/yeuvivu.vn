@@ -1,4 +1,7 @@
 import React, { useEffect, useMemo, useCallback } from "react";
+import ErrorPage from 'next/error'
+
+
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -12,6 +15,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import { handlerGetPostDetails } from "../../redux/actions/blog";
 import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
+import { getAllPostsWithSlug, getPostAndMorePosts, getAllPostsForHome } from '../api/index';
 
   const Wrapper = styled.div`
     .cover-style:before {
@@ -37,25 +41,6 @@ import { BACKEND } from '../../libs/config';
     width: 100%;
   }
 `;
- const BlogCover = styled.div`
- position: relative;
-  img {
-    height: 30vw;
-    object-fit: cover;
-    width: 100%;
-    vertical-align: middle;
-  }
-  .banner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 70%;
-    h1 {
-      color: white;
-    }
-  }
-`;
 
 const pageTitleMapping = {
   ["diem-den"]: "Điểm đến",
@@ -68,11 +53,13 @@ const pageTitleMapping = {
 
 export default function Post() {
   const router = useRouter();
+  if (!router.isFallback && !post?.slug) {
+    return <ErrorPage statusCode={404} />
+  }
   const dispatch = useDispatch();
   const { slug, Trang } = router.query;
   const postDetails = useSelector(({ blog }) => blog.postDetails);
   const tieuDe = postDetails ? postDetails.tieuDe : "";
-  const { url } = postDetails && postDetails.og_image ? postDetails.og_image : "";
   useEffect(() => {
     const theLoai = Trang;
     if(theLoai && slug) {
@@ -87,7 +74,6 @@ export default function Post() {
     { slug: `/${slug}`, title: tieuDe },
   ];
   const baseUrl = BACKEND();
-  const coverUrl = url ? `${baseUrl}${url}` : "";
   const imageSeo = postDetails && postDetails.anhGioiThieu ? postDetails.anhGioiThieu.url : '';
   const SEO = {
     title: postDetails ? postDetails.tieuDe : '',
@@ -107,11 +93,9 @@ export default function Post() {
       ],
     }
   };
-  // console.log(seo);
   return (
     <Wrapper className="container">
       <NextSeo {...SEO}/>
-
       <BlogStyles>
       <Breadcrumbs slugNTitle={slugNTitle} />
         <div className="post_info">
@@ -138,4 +122,29 @@ export default function Post() {
       </BlogStyles>
     </Wrapper>
   );
+}
+
+export async function getStaticProps({ params, preview = null }) {
+  const data = await getPostAndMorePosts(params.slug, preview)
+  // const content = await markdownToHtml(data?.posts[0]?.content || '')
+
+  return {
+    props: {
+      preview,
+      post: {
+        ...data?.posts[0],
+        // content,
+      },
+      morePosts: data?.morePosts,
+    },
+  }
+}
+
+
+export async function getStaticPaths() {
+  const allPosts = await getAllPostsWithSlug();
+  return {
+    paths: allPosts?.map((post) => `/baiViets/${post.slug}`) || [],
+    fallback: true,
+  }
 }

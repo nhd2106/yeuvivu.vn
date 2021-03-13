@@ -59,7 +59,7 @@ export default function DDrawer({ open, toggleDrawer, navigations }) {
       ].map(({ title, slug, icon }, index) => (
           <ListItem button key={slug}>
             <Icon style={{color: 'black', marginRight: '1rem'}}>{icon}</Icon>
-            <Link  href='/[Trang]' as={`${slug}`}>
+            <Link href={`${slug}`}>
                   <a className={clsx(classes.aTag, currentSlug===`/${slug}`? classes.active: '')}>{title}</a>
                 </Link>
           </ListItem>

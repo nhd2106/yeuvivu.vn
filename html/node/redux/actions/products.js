@@ -67,7 +67,6 @@ export function* queryProducts() {
 export function* queryProductsByPage(props) {
   const { page, type, ...rest } = props;
   const where = {};
-  console.log(rest)
   forEach(rest, (value, key) => {
     if(value) {
       set(where, `where.${key}`, value)

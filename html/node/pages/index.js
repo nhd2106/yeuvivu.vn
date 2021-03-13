@@ -17,8 +17,6 @@ import { getAllPostsForHome } from './api';
 
 
 export default function Home({ posts }) {
-  // const posts = useSelector(({ blog }) => blog.posts);
-  console.log(posts)
   const dispatch = useDispatch();
   useEffect(() => {
      dispatch(handlerGetAllPosts());

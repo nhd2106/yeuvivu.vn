@@ -10,7 +10,6 @@ import {
 export function* queryPosts  ({ the_loai, where }) {
   try {
     if (where) {
-      console.log('called', where)
       const { baiViets: posts } = yield graphQLCaller(`query {
         baiViets(
           where:{

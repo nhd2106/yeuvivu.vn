@@ -2,28 +2,6 @@ import _ from "lodash";
 import { useRouter } from "next/router";
 import Slider from "react-slick";
 
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "red" }}
-      onClick={onClick}
-    />
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "green" }}
-      onClick={onClick}
-    />
-  );
-}
-
 export default function AppCarousel() {
   const settings = {
     dots: false,
@@ -35,8 +13,6 @@ export default function AppCarousel() {
     autoplaySpeed: 3000,
     infinite: true,
     arrows: true,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />
   };
   return (
     <>
