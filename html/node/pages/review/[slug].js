@@ -50,8 +50,7 @@ const pageTitleMapping = {
   ["review"]: "Review",
 };
 
-
-export default function Post({ preview, post }) {
+function Post({ preview, post }) {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -122,25 +121,25 @@ export default function Post({ preview, post }) {
     </Wrapper>
   );
 }
-
-export async function getStaticProps({ params, preview = null }) {
-  const data = await getPostAndMorePosts(params.slug, preview);
+Post.getInitialProps = async (ctx) => {
+  console.log(ctx.query.slug);
+  const data = await getPostAndMorePosts(ctx.query.slug);
 
   return {
-    props: {
-      preview,
-      post: {
-        ...data?.baiViets[0],
-      },
+    post: {
+      ...data?.baiViets[0],
     },
   }
 }
 
+export default Post;
 
-export async function getStaticPaths() {
-  const allPosts = await getAllPostsWithSlug();
-  return {
-    paths: allPosts?.map((post) => `/review/${post.slug}`) || [],
-    fallback: true,
-  }
-}
+
+
+// export async function getStaticPaths() {
+//   const allPosts = await getAllPostsWithSlug();
+//   return {
+//     paths: allPosts?.map((post) => `/review/${post.slug}`) || [],
+//     fallback: true,
+//   }
+// }
