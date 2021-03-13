@@ -13,10 +13,12 @@ import {
 import TopNews from '../components/TopNews';
 import HomeNews from '../components/HomeNews';
 import { handlerGetAllPosts } from "../redux/actions/blog";
+import { getAllPostsForHome } from './api';
 
 
-export default function Home() {
-  const posts = useSelector(({ blog }) => blog.posts);
+export default function Home({ posts }) {
+  // const posts = useSelector(({ blog }) => blog.posts);
+  console.log(posts)
   const dispatch = useDispatch();
   useEffect(() => {
      dispatch(handlerGetAllPosts());
@@ -32,8 +34,8 @@ export default function Home() {
         {/* <div className={styles.carousel}>
         </div> */}
         {/* <Carousel /> */}
-        <TopNews/>
-        <HomeNews/>
+        <TopNews posts={posts}/>
+        <HomeNews posts={posts}/>
 
       </section>
       <div
@@ -53,4 +55,11 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ preview = null }) {
+  const posts = (await getAllPostsForHome(preview)) || []
+  return {
+    props: { posts, preview },
+  }
 }

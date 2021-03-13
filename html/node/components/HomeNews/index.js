@@ -61,10 +61,10 @@ const Homenews = styled.div`
  
 `;
 
-const HomeNews = (props) => {
+const HomeNews = ({ posts }) => {
   const baseUrl = BACKEND();
   
-  const posts = useSelector(({ blog }) => blog.posts);
+  // const posts = useSelector(({ blog }) => blog.posts);
   const [is_floating, setIs_floating] = useState(false);
   const toggleVisibility = () => {
     if (window.pageYOffset > 1500 && window.pageYOffset < -10) {
@@ -73,7 +73,6 @@ const HomeNews = (props) => {
       setIs_floating(false);
     }
   };
-  console.log(posts)
   useEffect(() => {
     document.addEventListener("scroll", function (e) {
       toggleVisibility();
@@ -89,9 +88,7 @@ const HomeNews = (props) => {
           <div className="news_list">
             {posts && posts.length ? _.map(posts, ({ 
               tieuDe,
-              anhGioiThieu: {
-                url
-              },
+              anhGioiThieu,
               slug,
               tags,
               published_at,
@@ -107,7 +104,7 @@ const HomeNews = (props) => {
                   <Hidden smUp><h3>{tieuDe}</h3></Hidden>
                   <Grid container spacing={2}>
                     <Grid  item xs={4} sm={3}>
-                      <img width="100%" src={`${baseUrl}${url}`} alt=""  height="auto" />
+                      <img width="100%" src={anhGioiThieu ?`${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd"  height="auto" />
                     </Grid>
                     <Grid item xs={8} sm={9}>
                     <Hidden smDown><h3>{tieuDe}</h3></Hidden>

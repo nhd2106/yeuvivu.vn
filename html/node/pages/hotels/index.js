@@ -124,7 +124,6 @@ export default function Hotels(props) {
   const baseUrl = BACKEND();
   useEffect(() => {
     const { where, page } = router.query;
-    console.log(where)
     dispatch(handlerProductsByPage(page, where));
   }, [router.query.page, where]);
   

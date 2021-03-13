@@ -27,9 +27,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const Topnews = (props) => {
+const Topnews = ({ posts }) => {
   const baseurl = BACKEND();
-  const posts = useSelector(({ blog }) => blog.posts);
+  // const posts = useSelector(({ blog }) => blog.posts);
   const top4lastest = posts ? posts.slice(0, 4) : null;
   const top3lastest = posts ? posts.slice(1, 4) : null;
   const top6lastest = posts ? posts.slice(0, 6) : null;
