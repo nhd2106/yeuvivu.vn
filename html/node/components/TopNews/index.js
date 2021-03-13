@@ -34,7 +34,6 @@ const Topnews = ({ posts, adsPoster1, groupBanner}) => {
   const lastest = top4lastest ? top4lastest[1] : null;
   const urlImage = adsPoster1 && adsPoster1.url ? adsPoster1.url.url : '';
   const groupBannerUrl = groupBanner && groupBanner.url ? groupBanner.url.url : '';
-  console.log(groupBannerUrl)
   return (
     <>
       <Wrapper>

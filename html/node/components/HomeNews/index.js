@@ -65,7 +65,6 @@ const HomeNews = ({ posts, adsPoster1 }) => {
   const baseUrl = BACKEND();
   const [is_floating, setIs_floating] = useState(false);
   const urlImage = adsPoster1 && adsPoster1.url ? adsPoster1.url.url : '';
-  console.log(urlImage)
   const toggleVisibility = () => {
     if (window.pageYOffset > 1500 && window.pageYOffset < -10) {
       setIs_floating(true);
