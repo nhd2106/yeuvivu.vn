@@ -192,13 +192,11 @@ const Trang = ({posts}) => {
 };
 
 Trang.propTypes = {};
+Trang.getInitialProps = async (ctx) => {
+  const posts = (await getPostByType("giam-gia")) || []
+    return {
+      posts
+    }
+}
 
 export default Trang;
-
-export async function getStaticProps({ preview = null }) {
-    const posts = (await getPostByType("giam-gia",preview)) || []
-    return {
-      props: { posts, preview },
-    }
-  }
-  
