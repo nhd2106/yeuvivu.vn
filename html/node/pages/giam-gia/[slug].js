@@ -94,7 +94,6 @@ export default function Post({ preview, post }) {
   };
   return (
     <Wrapper className="container">
-        s;kds;d
       <NextSeo {...SEO}/>
       <BlogStyles>
       <Breadcrumbs slugNTitle={slugNTitle} />

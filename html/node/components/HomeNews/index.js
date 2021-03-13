@@ -97,7 +97,7 @@ const HomeNews = ({ posts }) => {
             }) => {
               const { name } = the_loai || '';
               return (
-                <Link href="[Trang]/[post]" as={`/${name}/${slug}`} key={slug}>
+                <Link href={`/${name}/${slug}`} key={slug}>
                   <a>
                     <span>
                     <div className="news_item " >

@@ -48,9 +48,7 @@ const Topnews = ({ posts }) => {
           <Grid className="top-news" item xs={12} sm={6} md={8} lg={8}>
             <div style={{paddingBottom: '1rem'}}>
               {lastest ? (
-                <Link href="[Trang]/[post]"
-                as={`/${lastest.the_loai.name}/${lastest.slug}`}
-                >
+                <Link href={`/${lastest.the_loai.name}/${lastest.slug}`}>
                     <a>
                         <img
                         width="100%"
@@ -74,8 +72,7 @@ const Topnews = ({ posts }) => {
                       the_loai: { name },
                     }) => (
                       <Link
-                        href="[Trang]/[post]"
-                        as={`/${name}/${slug}`}
+                        href={`/${name}/${slug}`}
                         key={slug}
                       >
                         <a>
@@ -97,9 +94,7 @@ const Topnews = ({ posts }) => {
                       slug,
                       the_loai: { name },
                     }) => (
-                      <Link
-                        href="[Trang]/[post]"
-                        as={`/${name}/${slug}`}
+                      <Link href={`/${name}/${slug}`}
                         key={slug}
                       >
                         <a>
