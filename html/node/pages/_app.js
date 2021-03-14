@@ -75,6 +75,7 @@ function App({ Component, pageProps }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="google-site-verification" content="dw2DXuLj4BThK7IfgcxvNgu_QBEV9VdSw_-S4cei_gU" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
