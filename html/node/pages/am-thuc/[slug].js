@@ -93,7 +93,7 @@ function Post({ preview, post }) {
     }
   };
   return (
-    <Wrapper className="container">
+    <Wrapper className="container1">
       <NextSeo {...SEO}/>
       <BlogStyles>
       <Breadcrumbs slugNTitle={slugNTitle} />

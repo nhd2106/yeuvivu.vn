@@ -41,9 +41,6 @@ function Home({
         <meta name="author" content="Yêu vivu || đặt phòng khách sạn, book phòng, săn voucher, voucher siêu giảm giá" />
       </Head>
       <section className="container">
-        {/* <div className={styles.carousel}>
-        </div> */}
-        {/* <Carousel /> */}
         <TopNews
         posts={posts}
         adsPoster1={adsPoster1}
@@ -76,13 +73,14 @@ function Home({
           }}
         >
         </div>
+        
       </div>
     </div>
   );
 }
 
 Home.getInitialProps = async (ctx) => {
-  const posts = (await getAllPostsForHome()) || [];
+  const posts = (await getAllPostsForHome(1)) || [];
   const adsPoster1 = await getAdsPoster1();
   const adsPoster2 = await getAdsPoster2();
   const profileImage = await getProfileImage();

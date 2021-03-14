@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import styled from "styled-components";
@@ -9,6 +8,7 @@ import {
   Grid,
   Hidden, } from "@material-ui/core";
 import { BACKEND } from '../../libs/config';
+import { getAllPostsForHome } from '../../pages/api';
 
 const Homenews = styled.div`
 
@@ -58,13 +58,20 @@ const Homenews = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .loadmore {
+    display: flex;
+    justify-content: center;
+  }
  
 `;
 
-const HomeNews = ({ posts, adsPoster1 }) => {
+const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
   const baseUrl = BACKEND();
   const [is_floating, setIs_floating] = useState(false);
+  const [waiting, setWaiting] = useState(false);
   const urlImage = adsPoster1 && adsPoster1.url ? adsPoster1.url.url : '';
+  const [posts, setPosts] = useState(initialPosts);
+  const [num, setNum] = useState(2);
   const toggleVisibility = () => {
     if (window.pageYOffset > 1500 && window.pageYOffset < -10) {
       setIs_floating(true);
@@ -73,10 +80,18 @@ const HomeNews = ({ posts, adsPoster1 }) => {
     }
   };
   useEffect(() => {
+    setNum(2);
     document.addEventListener("scroll", function (e) {
       toggleVisibility();
     });
   }, []);
+  const handleLoadMore = async () => {
+      setWaiting(true)
+      const newPosts = await getAllPostsForHome(num);
+      setPosts((prev) => ([...prev, ...newPosts ]));
+      setWaiting(false)
+      setNum((prev) => prev +=1 );
+  };
   return (
     <Homenews>
       <Grid container spacing={2}>
@@ -125,6 +140,9 @@ const HomeNews = ({ posts, adsPoster1 }) => {
                 </Link>
               )
             }) : null}
+          </div>
+          <div className="loadmore">
+            <Button disabled={waiting}  rounded onClick={handleLoadMore}>{waiting ? 'Đang tải': 'Xem thêm'}</Button>
           </div>
         </Grid>
         <Hidden smDown>

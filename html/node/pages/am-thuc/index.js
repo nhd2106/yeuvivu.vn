@@ -5,6 +5,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import _ from 'lodash';
 import { BACKEND } from '../../libs/config';
+import { NextSeo } from 'next-seo';
 
 import {
   Breadcrumbs,
@@ -66,17 +67,32 @@ const Trang = ({posts}) => {
       setIs_floating(false);
     }
   };
+  const handleLoadMore = () => {
+      
+  };
   useEffect(() => {
     document.addEventListener("scroll", function (e) {
       toggleVisibility();
     });
   }, []);
-  const dispatch = useDispatch();
-  const the_loai = router.query.Trang
-  const where = router.query.where
-  useEffect(() => {
-    if(the_loai) dispatch(handlerGetPosts(the_loai, where));
-  }, [the_loai, where]);
+  const SEO = {
+    title,
+    openGraph: {
+      title,
+      type: 'Blog',
+      locale: 'vi_VN',
+      url: `https://yeuvivu.vn${router.asPath}`,
+      site_name: 'yeuvivu',
+      // images: [
+      //   {
+      //     url: `https://yeuvivu.vn:1337${imageSeo}`,
+      //     width: 800,
+      //     height: 600,
+      //     alt: 'Og Image Alt',
+      //   },
+      // ],
+    }
+  };
 
   return (
     <Wrapper className="container">

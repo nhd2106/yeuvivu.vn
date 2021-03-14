@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 async function fetchAPI(query, { variables } = {}) {
    const baseURL = process.env.NODE_ENV === 'production' ? 'https://yeuvivu.vn:1337' : 'http://localhost:1337'
   const res = await fetch(`${baseURL}/graphql`, {
@@ -108,10 +110,10 @@ export async function getAllPostsWithSlug() {
   return data?.baiViets;
 }
 
-export async function getAllPostsForHome(preview) {
+export async function getAllPostsForHome(number) {
   const data = await fetchAPI(
     ` query {
-            baiViets {
+            baiViets(start: ${number*4 -4}, limit: 4) {
               tieuDe,
               anhGioiThieu {
                 url
@@ -130,21 +132,20 @@ export async function getAllPostsForHome(preview) {
               }
             }
           }`,
-    {
-      variables: {
-        where: {
-          ...(preview ? {} : { status: "published" }),
-        },
-      },
-    }
   );
   return data?.baiViets;
 }
-export async function getPostByType(name, preview) {
+export async function getPostByType(name, number, mien) {
+  const where = {
+    the_loai: {
+      name
+    },
+  }
+  if(mien) _.set(where, 'mien.ten', mien);
   const data = await fetchAPI(
          `
             query PostByType($where: JSON)  {
-            baiViets(where: $where){
+            baiViets(where: $where, start: ${number*4 - 4}, limit: 4){
             tieuDe,
             anhGioiThieu {
                 url
@@ -165,13 +166,8 @@ export async function getPostByType(name, preview) {
       }
     `,
     {
-      preview,
       variables: {
-        where: {
-          the_loai: {
-              name
-          },
-        },
+        where
       },
     }
   );
