@@ -2,10 +2,11 @@ export default {
     title : "Yêu Vivu",
     description : 'Yêu vivu, yeuvivu.vn đặt cung cấp những voucher du lịch rẻ nhất có thể',
     titleTemplate : 'Yêu Vivu | %s',
+    keywords : 'yeuvivu, yeu-vivu, blog, du-lich, dat-phong, review, an-uong, dia-dem',
     openGraph: {
         type: 'website',
         locale: 'vi_VN',
-        url : 'http://yeuvivu.vn/',
+        url : 'https://yeuvivu.vn/',
         site_name: 'yeuvivu',
         images : [
             {

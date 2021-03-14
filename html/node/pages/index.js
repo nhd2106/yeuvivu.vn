@@ -36,14 +36,11 @@ function Home({
   return (
     <div>
       <Head>
-        <title>Yêu ViVu</title>
+        <title>Yêu ViVu | chuyên voucher resort, voucher villa, voucer khách sạn.</title>
         <meta name="keywords" content="Yêu Vivu, đặt phòng khách sạn, chuyên voucher resort, voucher villa, voucer khách sạn" />
-        <meta name="author" content="Yêu vivu || đặt phòng khách sạn, book phòng, săn voucher, voucher siêu giảm giá" />
+        <meta name="author" content="Yêu vivu | đặt phòng khách sạn, book phòng, săn voucher, voucher siêu giảm giá" />
       </Head>
       <section className="container">
-        {/* <div className={styles.carousel}>
-        </div> */}
-        {/* <Carousel /> */}
         <TopNews
         posts={posts}
         adsPoster1={adsPoster1}
