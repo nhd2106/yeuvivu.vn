@@ -14,8 +14,6 @@ import {
   Hidden,
 } from "@material-ui/core";
 import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-
-import { handlerGetPosts } from "../../redux/actions/blog";
 import { getPostByType } from '../api';
 
 
@@ -49,16 +47,21 @@ const pageTitleMapping = {
   ["review"]: "Review",
 };
 
-const Trang = ({posts}) => {
+const Trang = ({posts: initialPosts}) => {
   const baseUrl = BACKEND();
   const classes = useStyles()
   const router = useRouter();
-  const title = "Review"
-  const handleTag = (mien) => {
-    const { query } = router;
-    router.push(`/${query.Trang}?where=${mien}`)
-  }
+  const title = "Review";
+
+
+  const [posts, setPosts] = useState(initialPosts);
   const [is_floating, setIs_floating] = useState(false);
+
+  const handleTag = (mien) => {
+    const { pathname } = router;
+    router.push(`${pathname}?where=${mien}`)
+  }
+
   const toggleVisibility = () => {
     if (window.pageYOffset > 1500) {
       setIs_floating(true);
@@ -71,12 +74,13 @@ const Trang = ({posts}) => {
       toggleVisibility();
     });
   }, []);
-  const dispatch = useDispatch();
-  const the_loai = router.query.Trang
-  const where = router.query.where
-  useEffect(() => {
-    if(the_loai) dispatch(handlerGetPosts(the_loai, where));
-  }, [the_loai, where]);
+  const { where } = router.query;
+  useEffect( async () => {
+    if(where) {
+      const newPosts = await getPostByType("am-thuc", 1, where);
+      setPosts(newPosts);
+    } else setPosts(initialPosts);
+  }, [where]);
 
   return (
     <Wrapper className="container">
@@ -194,7 +198,7 @@ const Trang = ({posts}) => {
 Trang.propTypes = {};
 
 Trang.getInitialProps = async (ctx) => {
-  const posts = (await getPostByType("review")) || []
+  const posts = (await getPostByType("review", 1)) || []
     return {
       posts
     }

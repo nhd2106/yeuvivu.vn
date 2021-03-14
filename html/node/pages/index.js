@@ -12,7 +12,6 @@ import {
 
 import TopNews from '../components/TopNews';
 import HomeNews from '../components/HomeNews';
-import { handlerGetAllPosts } from "../redux/actions/blog";
 import {
   getAllPostsForHome,
   getAdsPoster1,
@@ -29,10 +28,6 @@ function Home({
   groupBanner,
   profileImage
  }) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-     dispatch(handlerGetAllPosts());
-  }, []);
   return (
     <div>
       <Head>

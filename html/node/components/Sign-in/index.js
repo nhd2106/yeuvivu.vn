@@ -3,7 +3,7 @@ import {
     Avatar,
 } from '@material-ui/core'
 import HttpsIcon from '@material-ui/icons/Https';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import {
     TextField,
@@ -37,31 +37,10 @@ const SignInStyles = styled.div`
   }
 `;
 
-import { signInHandler } from '../../redux/actions/user';
-import { useDispatch } from 'react-redux';
-import { set } from 'lodash';
-
-
-
-const useStyles = makeStyles({
-    root: {
-        display: 'flex',
-      justifyContent: "center",
-      flexDirection: 'column'
-    },
-    
-  });
-
 export default function SignIn() {
     const router = useRouter();
     const [user, setUser ] = useState(null);
-    const dispatch = useDispatch();
-    const handleSignIn =  (mode) => {
-          const SignInSucess = () => {
-            router.push('/admin')
-          }
-         dispatch(signInHandler(user, SignInSucess));
-    }
+  
     const handleChange = (e) => {
       const { name, value } = e.target
       setUser((prev) => ({
@@ -86,8 +65,8 @@ export default function SignIn() {
                         <TextField  style={{ marginBottom: '20px' }} id="user" name="identifier" label="Tên người dùng" variant="outlined" />
                         <TextField style={{ marginBottom: '20px' }} id="password" name="password" type="password" label="Mật khẩu" variant="outlined" />
                         <FormControlLabel control={<Checkbox />} label="Ghi nhớ đăng nhập"/>
-                        <Button onClick={() => handleSignIn()} on style={{width:'100%',background: '#3B8AD9', color: 'white', marginBottom: '1rem'}}>Đăng nhập</Button>
-                        <Button onClick={() => handleSignIn()} style={{width:'100%',background: 'red', color: 'white'}}>Đăng nhập với google</Button>
+                        <Button onClick={() => {} } on style={{width:'100%',background: '#3B8AD9', color: 'white', marginBottom: '1rem'}}>Đăng nhập</Button>
+                        <Button onClick={() => {} } style={{width:'100%',background: 'red', color: 'white'}}>Đăng nhập với google</Button>
                         </form>
                     </div>
                 </SignInStyles>

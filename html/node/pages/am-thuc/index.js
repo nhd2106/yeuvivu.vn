@@ -16,7 +16,6 @@ import {
 } from "@material-ui/core";
 import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 
-import { handlerGetPosts } from "../../redux/actions/blog";
 import { getPostByType } from '../api';
 
 
@@ -50,14 +49,15 @@ const pageTitleMapping = {
   ["review"]: "Review",
 };
 
-const Trang = ({posts}) => {
+const Trang = ({posts: initialPosts}) => {
   const baseUrl = BACKEND();
   const classes = useStyles()
   const router = useRouter();
   const title = "Ẩm thực";
+  const [posts, setPosts] = useState(initialPosts)
   const handleTag = (mien) => {
-    const { query } = router;
-    router.push(`/${query.Trang}?where=${mien}`)
+    const { pathname } = router;
+    router.push(`${pathname}?where=${mien}`)
   }
   const [is_floating, setIs_floating] = useState(false);
   const toggleVisibility = () => {
@@ -75,6 +75,13 @@ const Trang = ({posts}) => {
       toggleVisibility();
     });
   }, []);
+  const where = router.query.where
+  useEffect( async () => {
+    if(where) {
+      const newPosts = await getPostByType("am-thuc", 1, where);
+      setPosts(newPosts);
+    } else setPosts(initialPosts);
+  }, [where]);
   const SEO = {
     title,
     openGraph: {
@@ -209,7 +216,7 @@ const Trang = ({posts}) => {
 
 Trang.propTypes = {};
 Trang.getInitialProps = async (ctx) => {
-  const posts = (await getPostByType("am-thuc")) || []
+  const posts = (await getPostByType("am-thuc", 1)) || []
     return {
       posts
     }

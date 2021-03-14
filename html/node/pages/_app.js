@@ -4,7 +4,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { StylesProvider, makeStyles } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Head from "next/head";
 import Router from "next/router";
 import "slick-carousel/slick/slick.css";
@@ -16,8 +15,6 @@ import Button from "@material-ui/core/Button";
 import Waiting from "../components/Waiting";
 
 import SEO from "../next-seo.config";
-import { wrapper } from "../store";
-import { signInHandler } from "../redux/actions/user";
 
 const useStyles = makeStyles({
   button: {
@@ -35,8 +32,6 @@ const useStyles = makeStyles({
 function App({ Component, pageProps }) {
   const [is_visible, setIs_visible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const user = useSelector(({ user }) => user.user);
-  const dispatch = useDispatch();
   Router.events.on("routeChangeStart", () => {
     setIsLoading(true);
   });
@@ -64,11 +59,6 @@ function App({ Component, pageProps }) {
     document.addEventListener("scroll", function (e) {
       toggleVisibility();
     });
-    if (!user) {
-      const localUser = JSON.parse(window.localStorage.getItem("user"));
-      if (localUser) dispatch(signInHandler(localUser));
-    }
-    
   }, []);
   const classes = useStyles();
   return (
@@ -85,7 +75,7 @@ function App({ Component, pageProps }) {
       <StylesProvider injectFirst>
         <DefaultSeo {...SEO} />
         {isLoading ? <Waiting fullscreen type="WindMillLoading" /> : null}
-        <Header user={user} />
+        <Header />
 
         <Component {...pageProps} />
         {is_visible ? (
@@ -105,4 +95,4 @@ function App({ Component, pageProps }) {
   );
 }
 
-export default wrapper.withRedux(App);
+export default App;

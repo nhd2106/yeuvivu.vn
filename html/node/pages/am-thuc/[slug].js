@@ -12,7 +12,6 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
-import { handlerGetPostDetails } from "../../redux/actions/blog";
 import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
 import { getAllPostsWithSlug, getPostAndMorePosts, getAllPostsForHome } from '../api/index';
@@ -51,26 +50,19 @@ const pageTitleMapping = {
 };
 
 
-function Post({ preview, post }) {
+function Post({ post }) {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
-  const dispatch = useDispatch();
   const { slug, Trang } = router.query;
   const tieuDe = post ? post.tieuDe : "";
-  useEffect(() => {
-    const theLoai = Trang;
-    if(theLoai && slug) {
-      dispatch(handlerGetPostDetails(slug, theLoai));
-    }
-  }, [slug, Trang]);
   const render = useMemo(() => {
     if (post) return { __html: post.noiDung };
   }, [post]);
   const slugNTitle = [
     { slug: 'am-thuc', title: 'Ẩm thực'},
-    { slug: `/${slug}`, title: tieuDe },
+    { title: tieuDe },
   ];
   const baseUrl = BACKEND();
   const imageSeo = post && post.anhGioiThieu ? post.anhGioiThieu.url : '';

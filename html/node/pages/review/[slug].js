@@ -12,7 +12,6 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
-import { handlerGetPostDetails } from "../../redux/actions/blog";
 import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
 import { getAllPostsWithSlug, getPostAndMorePosts, getAllPostsForHome } from '../api/index';
@@ -69,7 +68,7 @@ function Post({ preview, post }) {
   }, [post]);
   const slugNTitle = [
     { slug: '/review', title: 'Review'},
-    { slug: `/${slug}`, title: tieuDe },
+    {  title: tieuDe },
   ];
   const baseUrl = BACKEND();
   const imageSeo = post && post.anhGioiThieu ? post.anhGioiThieu.url : '';

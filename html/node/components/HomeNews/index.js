@@ -142,7 +142,7 @@ const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
             }) : null}
           </div>
           <div className="loadmore">
-            <Button disabled={waiting}  rounded onClick={handleLoadMore}>{waiting ? 'Đang tải': 'Xem thêm'}</Button>
+            <Button disabled={waiting} onClick={handleLoadMore}>{waiting ? 'Đang tải': 'Xem thêm'}</Button>
           </div>
         </Grid>
         <Hidden smDown>

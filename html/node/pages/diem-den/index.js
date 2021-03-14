@@ -14,8 +14,6 @@ import {
   Hidden,
 } from "@material-ui/core";
 import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-
-import { handlerGetPosts } from "../../redux/actions/blog";
 import { getPostByType, getPostAndMorePosts } from '../api';
 
 
@@ -72,7 +70,6 @@ const Trang = ({ posts:initialPosts }) => {
       toggleVisibility();
     });
   }, []);
-  const dispatch = useDispatch();
   const where = router.query.where
   useEffect( async () => {
     if(where) {
