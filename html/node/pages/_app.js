@@ -74,21 +74,16 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
         <link rel="icon" href="/yeuvivulogo.svg" />
-        {/* <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"/>  */}
       </Head>
       <StylesProvider injectFirst>
         <DefaultSeo {...SEO} />
         {isLoading ? <Waiting fullscreen type="WindMillLoading" /> : null}
-        {/* { isLoading ? <Loader color="#fff" type="cylon" /> : null } */}
         <Header user={user} />
 
         <Component {...pageProps} />
