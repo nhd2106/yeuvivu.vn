@@ -8,12 +8,18 @@ export default async (req, res) => {
     });
 
     // List of posts
-    const posts = [];
+    const posts = [
+        { slug: 'diem-den'},
+        { slug: 'am-thuc'},
+        { slug: 'lich-trinh'},
+        { slug: 'review'},
+        { slug: 'giam-ga'},
+    ];
 
     // Create each URL row
     posts.forEach(post => {
       smStream.write({
-        url: `/post/${post.slug}`,
+        url: `/${post.slug}`,
         changefreq: 'daily',
         priority: 0.9
       });
