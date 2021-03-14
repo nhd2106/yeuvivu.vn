@@ -121,7 +121,6 @@ function Post({ preview, post }) {
   );
 }
 Post.getInitialProps = async (ctx) => {
-  console.log(ctx.query.slug);
   const data = await getPostAndMorePosts(ctx.query.slug);
 
   return {
