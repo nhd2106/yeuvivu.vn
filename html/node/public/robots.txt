@@ -1,2 +1,3 @@
+Sitemap: https://yeuvivu.vn/api/posts-sitemap
 User-agent: *
 Disallow: *.php$
