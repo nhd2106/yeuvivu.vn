@@ -36,8 +36,10 @@ function Home({
   return (
     <div>
       <Head>
-        <title>Yêu ViVu | chuyên voucher resort, voucher villa, voucer khách sạn.</title>
-        <meta name="keywords" content="Yêu Vivu, đặt phòng khách sạn, chuyên voucher resort, voucher villa, voucer khách sạn" />
+        <title>Yêu Vivu | Blog Review, trải nghiệm, resort, villa, khách sạn, trips.</title>
+        <meta name="keywords" content="Yêu vivu, yeuvivu, yeu-vivu, Review, trải nghiệm, resort, villa, khách sạn, trips" />
+        <meta name="description" content="Yêu vivu, yeuvivu.vn Chuyên trang Review, trải nghiệm, resort, villa, khách sạn, trips
+            Cung cấp vouchers resort, villa, khách sạn có giá cả và trải nghệm tốt nhất." />
         <meta name="author" content="Yêu vivu | đặt phòng khách sạn, book phòng, săn voucher, voucher siêu giảm giá" />
       </Head>
       <section className="container">
