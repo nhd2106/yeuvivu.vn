@@ -31,7 +31,7 @@ function Home({
   return (
     <div>
       <Head>
-        <title>Yêu Vivu | Blog Review, trải nghiệm, resort, villa, khách sạn, trips.</title>
+        <title>Yêu Vivu | Blog review, trải nghiệm, resort, villa, khách sạn, trip.</title>
         <meta name="keywords" content="Yêu vivu, yeuvivu, yeu-vivu, Review, trải nghiệm, resort, villa, khách sạn, trips" />
         <meta name="description" content="Yêu vivu, yeuvivu.vn Chuyên trang Review, trải nghiệm, resort, villa, khách sạn, trips
             Cung cấp vouchers resort, villa, khách sạn có giá cả và trải nghệm tốt nhất." />
