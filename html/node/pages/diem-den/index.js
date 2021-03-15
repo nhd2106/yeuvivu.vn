@@ -28,6 +28,53 @@ const Wrapper = styled.div`
             margin-bottom: 1rem;
         }
     }
+    .news_item {
+      @media (max-width: 600px) {
+        height: 210px;
+      }
+      .item_image {
+        margin-right: 1rem;
+      }
+      padding-bottom: 1rem;
+      margin: 1rem 0;
+      border-bottom: 1px solid #eee;
+      img {
+        border-radius: 4px;
+      }
+    }
+    .isfloating {
+      position: fixed;
+      top: 15%;
+      bottom: 10%
+    }
+    .item_desc {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .loadmore {
+      display: flex;
+      justify-content: center;
+    }
+    @media (max-width: 599px) {
+      .item_desc {
+        font-size: 14px;
+        line-height: 1.4;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+      }
+    }
+    @media (min-width: 600px) {
+      .item_desc {
+        font-size: 16px;
+        line-height: 1.4;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+      }
+    }
 `;
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -133,11 +180,11 @@ const Trang = ({ posts:initialPosts }) => {
                 <div className="news_item " >
                 <Hidden smUp><h3>{tieuDe}</h3></Hidden>
                 <Grid container spacing={2}>
-                  <Grid  item xs={4} sm={3}>
+                  <Grid  item xs={7} sm={4}>
                     <img width="100%" src={`${baseUrl}${url}`} alt=""  height="auto" />
                   </Grid>
-                  <Grid item xs={8} sm={9}>
-                  <Hidden smDown><h3>{tieuDe}</h3></Hidden>
+                  <Grid item xs={5} sm={8}>
+                  <Hidden only={['xs']}><h3>{tieuDe}</h3></Hidden>
                     <span>{published_at} | {
                         tags ? tags.map(({ tagName }, id) => <Link key={id} href="/"><a style={{
                           fontWeight: '500',
@@ -147,7 +194,7 @@ const Trang = ({ posts:initialPosts }) => {
                         }}>#{tagName}</a></Link>)
                        : null
                       }</span>
-                    <p className="item_desc">{mota}</p>
+                    <div className="item_desc">{mota}</div>
                   </Grid>
                 </Grid>
               </div>

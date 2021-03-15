@@ -61,7 +61,7 @@ function Post({ post }) {
     if (post) return { __html: post.noiDung };
   }, [post]);
   const slugNTitle = [
-    { slug: 'am-thuc', title: 'Ẩm thực'},
+    { slug: '/am-thuc', title: 'Ẩm thực'},
     { title: tieuDe },
   ];
   const baseUrl = BACKEND();

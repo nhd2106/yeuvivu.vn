@@ -68,7 +68,7 @@ const pageTitleMapping = {
     if (post) return { __html: post.noiDung };
   }, [post]);
   const slugNTitle = [
-    { slug: 'giam-gia', title: 'Giảm giá'},
+    { slug: '/giam-gia', title: 'Giảm giá'},
     {  title: tieuDe },
   ];
   const baseUrl = BACKEND();

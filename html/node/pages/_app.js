@@ -70,7 +70,10 @@ function App({ Component, pageProps }) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
-        <link rel="icon" href="/yeuvivulogo.svg" />
+        <link rel="shortcut icon" href="/icons/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"></link>
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"></link>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
       </Head>
       <StylesProvider injectFirst>
         <DefaultSeo {...SEO} />

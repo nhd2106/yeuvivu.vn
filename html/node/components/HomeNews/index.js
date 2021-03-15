@@ -6,7 +6,9 @@ import {
   Typography,
   Button,
   Grid,
-  Hidden, } from "@material-ui/core";
+  Hidden,
+  Box
+} from "@material-ui/core";
 import { BACKEND } from '../../libs/config';
 import { getAllPostsForHome } from '../../pages/api';
 
@@ -62,6 +64,26 @@ const Homenews = styled.div`
     display: flex;
     justify-content: center;
   }
+  @media (max-width: 599px) {
+    .item_desc {
+      font-size: 14px;
+      line-height: 1.4;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
+  }
+  @media (min-width: 600px) {
+    .item_desc {
+      font-size: 16px;
+      line-height: 1.4;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
+  }
  
 `;
 
@@ -114,14 +136,14 @@ const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
                 <Link href={`/${name}/${slug}`} key={slug}>
                   <a>
                     <span>
-                    <div className="news_item " >
+                    <Box className="news_item " >
                   <Hidden smUp><h3>{tieuDe}</h3></Hidden>
                   <Grid container spacing={2}>
-                    <Grid  item xs={4} sm={3}>
+                    <Grid  item xs={7} sm={4}>
                       <img width="100%" src={anhGioiThieu ?`${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd"  height="auto" />
                     </Grid>
-                    <Grid item xs={8} sm={9}>
-                    <Hidden smDown><h3>{tieuDe}</h3></Hidden>
+                    <Grid item xs={5} sm={8}>
+                    <Hidden only={['xs']}><h3>{tieuDe}</h3></Hidden>
                       {/* <span>{published_at}| {
                         tags ? tags.map(({ tagName }, id) => <Link key={id} href="/"><a style={{
                           fontWeight: '500',
@@ -131,10 +153,10 @@ const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
                         }}>#{tagName}</a></Link>)
                        : null
                       }</span> */}
-                      <p className="item_desc">{mota}</p>
+                      <div className="item_desc">{mota}</div>
                     </Grid>
                   </Grid>
-                </div>
+                </Box>
                     </span>
                   </a>
                 </Link>
