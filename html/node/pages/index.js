@@ -1,15 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-
-import {
-  Typography,
-  Button,
-  Grid,
-  Hidden,
-} from "@material-ui/core";
-
 import TopNews from '../components/TopNews';
 import HomeNews from '../components/HomeNews';
 import {
@@ -87,15 +76,3 @@ Home.getInitialProps = async (ctx) => {
   }
 }
 export default Home;
-
-// export async function getStaticProps({ preview = null }) {
-//   const posts = (await getAllPostsForHome(preview)) || [];
-//   const adsPoster1 = await getAdsPoster1();
-//   const adsPoster2 = await getAdsPoster2();
-//   const profileImage = await getProfileImage();
-//   const groupBanner = await getGroupBanner();
-  
-//   return {
-//     props: { posts, preview, adsPoster1, adsPoster2,  profileImage, groupBanner },
-//   }
-// }
