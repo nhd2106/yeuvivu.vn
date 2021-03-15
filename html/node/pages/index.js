@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { NextSeo } from 'next-seo';
 import TopNews from '../components/TopNews';
 import HomeNews from '../components/HomeNews';
 import {
@@ -6,26 +7,52 @@ import {
   getAdsPoster1,
   getAdsPoster2,
   getGroupBanner,
-  getProfileImage
+  getProfileImage,
+  getHomepageSeo,
+  getPosters
 } from './api';
 
 
 function Home({
   posts,
-  adsPoster1,
-  adsPoster2,
-  groupBanner,
-  profileImage
+  seoContent,
+  posters
  }) {
+   const {
+     ads1: adsPoster1,
+     ads2: adsPoster2,
+     groupBanner,
+     instagram: profileImage
+   } = posters
+  const { 
+    title,
+    keywords,
+    image,
+    description,
+  } = seoContent;
+  const   {
+    url,
+    alternativeText
+  } = image || '';
+  const SEO = {
+    title,
+    description,
+    keywords,
+    openGraph: {
+      images : [
+          {
+              url: `https://yeuvivu.vn:1337${url}`,
+              width: 800,
+              height: 600,
+              alt: alternativeText,
+          }
+      ]
+      
+  }
+}
   return (
     <div>
-      <Head>
-        <title>Yêu Vivu | Blog review, trải nghiệm, resort, villa, khách sạn, trip.</title>
-        <meta name="keywords" content="Yêu vivu, yeuvivu, yeu-vivu, Review, trải nghiệm, resort, villa, khách sạn, trips" />
-        <meta name="description" content="Yêu vivu, yeuvivu.vn Chuyên trang Review, trải nghiệm, resort, villa, khách sạn, trips
-            Cung cấp vouchers resort, villa, khách sạn có giá cả và trải nghệm tốt nhất." />
-        <meta name="author" content="Yêu vivu | đặt phòng khách sạn, book phòng, săn voucher, voucher siêu giảm giá" />
-      </Head>
+      <NextSeo {...SEO}/>
       <section className="container">
         <TopNews
         posts={posts}
@@ -71,8 +98,16 @@ Home.getInitialProps = async (ctx) => {
   const adsPoster2 = await getAdsPoster2();
   const profileImage = await getProfileImage();
   const groupBanner = await getGroupBanner();
+  const seoContent = await getHomepageSeo();
+  const posters = await getPosters();
   return {
-    posts, adsPoster1, adsPoster2,  profileImage, groupBanner ,
+    posts,
+    adsPoster1,
+    adsPoster2, 
+    profileImage,
+    groupBanner,
+    seoContent,
+    posters
   }
 }
 export default Home;

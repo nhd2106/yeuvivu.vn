@@ -56,6 +56,7 @@ export async function getProfileImage() {
   );
   return data?.socialPoster;
 }
+
 export async function getAdsPoster1() {
   const data = await fetchAPI(
     `
@@ -97,6 +98,47 @@ export async function getGroupBanner() {
     `
   );
   return data?.groupBanner;
+}
+
+export async function getHomepageSeo() {
+  const data = await fetchAPI(
+    `
+    query {
+      homepageSeo {
+        title,
+        desccription,
+        keywords,
+        image{
+          url
+        }
+      }
+     }
+    `
+  );
+  return data?.homepageSeo;
+}
+export async function getPosters() {
+  const data = await fetchAPI(
+    `
+    query {
+      postersAndBanner {
+        ads1 {
+          url
+        },
+        ads2  {
+          url
+        },
+        groupbanner {
+          url
+        },
+        instagram {
+          url
+        }
+      }
+     }
+    `
+  );
+  return data?.postersAndBanner;
 }
 
 export async function getAllPostsWithSlug() {
