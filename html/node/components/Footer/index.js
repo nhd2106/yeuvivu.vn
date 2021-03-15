@@ -107,7 +107,7 @@ export default function Footer() {
               </div>
             </div>
             <div>
-              <h2>Cần trợ giúp?</h2>
+              <h2>Liên hệ quảng cáo?</h2>
             </div>
           </div>
         </div>

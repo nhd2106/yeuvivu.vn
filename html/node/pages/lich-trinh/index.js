@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import styled from "styled-components";
 import _ from 'lodash';
-import { BACKEND } from '../../libs/config';
+import { makeStyles } from '@material-ui/core/styles';
+import { NextSeo } from 'next-seo';
+
 
 import {
   Breadcrumbs,
@@ -13,8 +14,10 @@ import {
   Grid,
   Hidden,
 } from "@material-ui/core";
-import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+
+
 import { getPostByType } from '../api';
+import { BACKEND } from '../../libs/config';
 
 
 const Wrapper = styled.div`
@@ -35,17 +38,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
-
-const pageTitleMapping = {
-  ["diem-den"]: "Điểm đến",
-  ["giam-gia"]: "Giảm giá",
-  ["lich-trinh"]: "Lịch trình",
-  ["am-thuc"]: "Ẩm thực",
-  ["review"]: "Review",
-};
 
 const Trang = ({posts: initialPosts}) => {
   const baseUrl = BACKEND();
@@ -78,9 +70,15 @@ const Trang = ({posts: initialPosts}) => {
       setPosts(newPosts);
     } else setPosts(initialPosts);
   }, [where]);
+  const SEO = {
+    title,
+    keywords: 'keywords',
+    description: ''
+  }
 
   return (
     <Wrapper className="container">
+      <NextSeo {...SEO}/>
       <div className="titleNBreadCrumbs">                     
         <h2>{title}</h2>
         <div>
