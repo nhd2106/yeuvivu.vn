@@ -12,7 +12,6 @@ import {
 
 import TopNews from '../components/TopNews';
 import HomeNews from '../components/HomeNews';
-import { handlerGetAllPosts } from "../redux/actions/blog";
 import {
   getAllPostsForHome,
   getAdsPoster1,
@@ -29,14 +28,10 @@ function Home({
   groupBanner,
   profileImage
  }) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-     dispatch(handlerGetAllPosts());
-  }, []);
   return (
     <div>
       <Head>
-        <title>Yêu Vivu | Blog Review, trải nghiệm, resort, villa, khách sạn, trips.</title>
+        <title>Yêu Vivu | Blog review, trải nghiệm, resort, villa, khách sạn, trip.</title>
         <meta name="keywords" content="Yêu vivu, yeuvivu, yeu-vivu, Review, trải nghiệm, resort, villa, khách sạn, trips" />
         <meta name="description" content="Yêu vivu, yeuvivu.vn Chuyên trang Review, trải nghiệm, resort, villa, khách sạn, trips
             Cung cấp vouchers resort, villa, khách sạn có giá cả và trải nghệm tốt nhất." />
@@ -75,13 +70,14 @@ function Home({
           }}
         >
         </div>
+        
       </div>
     </div>
   );
 }
 
 Home.getInitialProps = async (ctx) => {
-  const posts = (await getAllPostsForHome()) || [];
+  const posts = (await getAllPostsForHome(1)) || [];
   const adsPoster1 = await getAdsPoster1();
   const adsPoster2 = await getAdsPoster2();
   const profileImage = await getProfileImage();

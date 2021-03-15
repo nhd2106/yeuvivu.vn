@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 import { Grid, Hidden } from "@material-ui/core";

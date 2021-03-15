@@ -12,7 +12,6 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
-import { handlerGetPostDetails } from "../../redux/actions/blog";
 import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
 import { getAllPostsWithSlug, getPostAndMorePosts, getAllPostsForHome } from '../api/index';
@@ -70,7 +69,7 @@ const pageTitleMapping = {
   }, [post]);
   const slugNTitle = [
     { slug: '/lich-trinh', title: "Lịch trình"},
-    { slug: `/${slug}`, title: tieuDe },
+    { title: tieuDe },
   ];
   const baseUrl = BACKEND();
   const imageSeo = post && post.anhGioiThieu ? post.anhGioiThieu.url : '';
@@ -93,7 +92,7 @@ const pageTitleMapping = {
     }
   };
   return (
-    <Wrapper className="container">
+    <Wrapper className="container1">
       <NextSeo {...SEO}/>
       <BlogStyles>
       <Breadcrumbs slugNTitle={slugNTitle} />
@@ -123,7 +122,6 @@ const pageTitleMapping = {
   );
 }
 Post.getInitialProps = async (ctx) => {
-  console.log(ctx.query.slug);
   const data = await getPostAndMorePosts(ctx.query.slug);
 
   return {

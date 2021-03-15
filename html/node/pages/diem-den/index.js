@@ -14,8 +14,6 @@ import {
   Hidden,
 } from "@material-ui/core";
 import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-
-import { handlerGetPosts } from "../../redux/actions/blog";
 import { getPostByType, getPostAndMorePosts } from '../api';
 
 
@@ -29,6 +27,53 @@ const Wrapper = styled.div`
         h3 {
             margin-bottom: 1rem;
         }
+    }
+    .news_item {
+      @media (max-width: 600px) {
+        height: 210px;
+      }
+      .item_image {
+        margin-right: 1rem;
+      }
+      padding-bottom: 1rem;
+      margin: 1rem 0;
+      border-bottom: 1px solid #eee;
+      img {
+        border-radius: 4px;
+      }
+    }
+    .isfloating {
+      position: fixed;
+      top: 15%;
+      bottom: 10%
+    }
+    .item_desc {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .loadmore {
+      display: flex;
+      justify-content: center;
+    }
+    @media (max-width: 599px) {
+      .item_desc {
+        font-size: 14px;
+        line-height: 1.4;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+      }
+    }
+    @media (min-width: 600px) {
+      .item_desc {
+        font-size: 16px;
+        line-height: 1.4;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+      }
     }
 `;
 const useStyles = makeStyles((theme) => ({
@@ -49,14 +94,15 @@ const pageTitleMapping = {
   ["review"]: "Review",
 };
 
-const Trang = ({posts}) => {
+const Trang = ({ posts:initialPosts }) => {
   const baseUrl = BACKEND();
   const classes = useStyles()
   const router = useRouter();
   const title = "Điểm đến"
+  const [posts, setPosts] = useState(initialPosts)
   const handleTag = (mien) => {
-    const { query } = router;
-    router.push(`/${query.Trang}?where=${mien}`)
+    const { pathname } = router;
+      router.push(`${pathname}?where=${mien}`)
   }
   const [is_floating, setIs_floating] = useState(false);
   const toggleVisibility = () => {
@@ -71,12 +117,13 @@ const Trang = ({posts}) => {
       toggleVisibility();
     });
   }, []);
-  const dispatch = useDispatch();
-  const the_loai = router.query.Trang
   const where = router.query.where
-  useEffect(() => {
-    if(the_loai) dispatch(handlerGetPosts(the_loai, where));
-  }, [the_loai, where]);
+  useEffect( async () => {
+    if(where) {
+      const newPosts = await getPostByType("diem-den", 1, where);
+      setPosts(newPosts);
+    } else setPosts(initialPosts);
+  }, [where]);
 
   return (
     <Wrapper className="container">
@@ -133,11 +180,11 @@ const Trang = ({posts}) => {
                 <div className="news_item " >
                 <Hidden smUp><h3>{tieuDe}</h3></Hidden>
                 <Grid container spacing={2}>
-                  <Grid  item xs={4} sm={3}>
+                  <Grid  item xs={7} sm={4}>
                     <img width="100%" src={`${baseUrl}${url}`} alt=""  height="auto" />
                   </Grid>
-                  <Grid item xs={8} sm={9}>
-                  <Hidden smDown><h3>{tieuDe}</h3></Hidden>
+                  <Grid item xs={5} sm={8}>
+                  <Hidden only={['xs']}><h3>{tieuDe}</h3></Hidden>
                     <span>{published_at} | {
                         tags ? tags.map(({ tagName }, id) => <Link key={id} href="/"><a style={{
                           fontWeight: '500',
@@ -147,7 +194,7 @@ const Trang = ({posts}) => {
                         }}>#{tagName}</a></Link>)
                        : null
                       }</span>
-                    <p className="item_desc">{mota}</p>
+                    <div className="item_desc">{mota}</div>
                   </Grid>
                 </Grid>
               </div>
@@ -194,7 +241,7 @@ const Trang = ({posts}) => {
 Trang.propTypes = {};
 
 Trang.getInitialProps = async (ctx) => {
-  const posts = (await getPostByType("diem-den")) || []
+  const posts = (await getPostByType("diem-den", 1)) || []
     return {
       posts
     }

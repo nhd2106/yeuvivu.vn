@@ -11,17 +11,8 @@ import {
     FormControlLabel,
     Hidden
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 
-const useStyles = makeStyles({
-    root: {
-        display: 'flex',
-        justifyContent: "center",
-        flexDirection: 'column'
-    },
-    
-  });
   const SignInStyles = styled.div`
   display: flex !important;
   justify-content: center !important;
@@ -44,7 +35,6 @@ const useStyles = makeStyles({
   }
 `;
 export default function SignUp() {
-    const classes = useStyles()
     return (
         <>
             <Container style={{ marginTop: '10vh'}}>

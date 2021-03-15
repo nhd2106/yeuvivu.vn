@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import styled from "styled-components";
@@ -7,8 +6,11 @@ import {
   Typography,
   Button,
   Grid,
-  Hidden, } from "@material-ui/core";
+  Hidden,
+  Box
+} from "@material-ui/core";
 import { BACKEND } from '../../libs/config';
+import { getAllPostsForHome } from '../../pages/api';
 
 const Homenews = styled.div`
 
@@ -58,13 +60,40 @@ const Homenews = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .loadmore {
+    display: flex;
+    justify-content: center;
+  }
+  @media (max-width: 599px) {
+    .item_desc {
+      font-size: 14px;
+      line-height: 1.4;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
+  }
+  @media (min-width: 600px) {
+    .item_desc {
+      font-size: 16px;
+      line-height: 1.4;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
+  }
  
 `;
 
-const HomeNews = ({ posts, adsPoster1 }) => {
+const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
   const baseUrl = BACKEND();
   const [is_floating, setIs_floating] = useState(false);
+  const [waiting, setWaiting] = useState(false);
   const urlImage = adsPoster1 && adsPoster1.url ? adsPoster1.url.url : '';
+  const [posts, setPosts] = useState(initialPosts);
+  const [num, setNum] = useState(2);
   const toggleVisibility = () => {
     if (window.pageYOffset > 1500 && window.pageYOffset < -10) {
       setIs_floating(true);
@@ -73,10 +102,18 @@ const HomeNews = ({ posts, adsPoster1 }) => {
     }
   };
   useEffect(() => {
+    setNum(2);
     document.addEventListener("scroll", function (e) {
       toggleVisibility();
     });
   }, []);
+  const handleLoadMore = async () => {
+      setWaiting(true)
+      const newPosts = await getAllPostsForHome(num);
+      setPosts((prev) => ([...prev, ...newPosts ]));
+      setWaiting(false)
+      setNum((prev) => prev +=1 );
+  };
   return (
     <Homenews>
       <Grid container spacing={2}>
@@ -99,14 +136,14 @@ const HomeNews = ({ posts, adsPoster1 }) => {
                 <Link href={`/${name}/${slug}`} key={slug}>
                   <a>
                     <span>
-                    <div className="news_item " >
+                    <Box className="news_item " >
                   <Hidden smUp><h3>{tieuDe}</h3></Hidden>
                   <Grid container spacing={2}>
-                    <Grid  item xs={4} sm={3}>
+                    <Grid  item xs={7} sm={4}>
                       <img width="100%" src={anhGioiThieu ?`${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd"  height="auto" />
                     </Grid>
-                    <Grid item xs={8} sm={9}>
-                    <Hidden smDown><h3>{tieuDe}</h3></Hidden>
+                    <Grid item xs={5} sm={8}>
+                    <Hidden only={['xs']}><h3>{tieuDe}</h3></Hidden>
                       {/* <span>{published_at}| {
                         tags ? tags.map(({ tagName }, id) => <Link key={id} href="/"><a style={{
                           fontWeight: '500',
@@ -116,15 +153,18 @@ const HomeNews = ({ posts, adsPoster1 }) => {
                         }}>#{tagName}</a></Link>)
                        : null
                       }</span> */}
-                      <p className="item_desc">{mota}</p>
+                      <div className="item_desc">{mota}</div>
                     </Grid>
                   </Grid>
-                </div>
+                </Box>
                     </span>
                   </a>
                 </Link>
               )
             }) : null}
+          </div>
+          <div className="loadmore">
+            <Button disabled={waiting} onClick={handleLoadMore}>{waiting ? 'Đang tải': 'Xem thêm'}</Button>
           </div>
         </Grid>
         <Hidden smDown>

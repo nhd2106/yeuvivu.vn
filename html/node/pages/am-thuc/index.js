@@ -5,6 +5,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import _ from 'lodash';
 import { BACKEND } from '../../libs/config';
+import { NextSeo } from 'next-seo';
 
 import {
   Breadcrumbs,
@@ -15,7 +16,6 @@ import {
 } from "@material-ui/core";
 import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 
-import { handlerGetPosts } from "../../redux/actions/blog";
 import { getPostByType } from '../api';
 
 
@@ -49,14 +49,15 @@ const pageTitleMapping = {
   ["review"]: "Review",
 };
 
-const Trang = ({posts}) => {
+const Trang = ({posts: initialPosts}) => {
   const baseUrl = BACKEND();
   const classes = useStyles()
   const router = useRouter();
   const title = "Ẩm thực";
+  const [posts, setPosts] = useState(initialPosts)
   const handleTag = (mien) => {
-    const { query } = router;
-    router.push(`/${query.Trang}?where=${mien}`)
+    const { pathname } = router;
+    router.push(`${pathname}?where=${mien}`)
   }
   const [is_floating, setIs_floating] = useState(false);
   const toggleVisibility = () => {
@@ -66,17 +67,39 @@ const Trang = ({posts}) => {
       setIs_floating(false);
     }
   };
+  const handleLoadMore = () => {
+      
+  };
   useEffect(() => {
     document.addEventListener("scroll", function (e) {
       toggleVisibility();
     });
   }, []);
-  const dispatch = useDispatch();
-  const the_loai = router.query.Trang
   const where = router.query.where
-  useEffect(() => {
-    if(the_loai) dispatch(handlerGetPosts(the_loai, where));
-  }, [the_loai, where]);
+  useEffect( async () => {
+    if(where) {
+      const newPosts = await getPostByType("am-thuc", 1, where);
+      setPosts(newPosts);
+    } else setPosts(initialPosts);
+  }, [where]);
+  const SEO = {
+    title,
+    openGraph: {
+      title,
+      type: 'Blog',
+      locale: 'vi_VN',
+      url: `https://yeuvivu.vn${router.asPath}`,
+      site_name: 'yeuvivu',
+      // images: [
+      //   {
+      //     url: `https://yeuvivu.vn:1337${imageSeo}`,
+      //     width: 800,
+      //     height: 600,
+      //     alt: 'Og Image Alt',
+      //   },
+      // ],
+    }
+  };
 
   return (
     <Wrapper className="container">
@@ -193,7 +216,7 @@ const Trang = ({posts}) => {
 
 Trang.propTypes = {};
 Trang.getInitialProps = async (ctx) => {
-  const posts = (await getPostByType("am-thuc")) || []
+  const posts = (await getPostByType("am-thuc", 1)) || []
     return {
       posts
     }

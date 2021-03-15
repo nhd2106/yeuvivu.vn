@@ -1,5 +1,5 @@
 import React from "react";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import { Breadcrumbs, Typography } from "@material-ui/core";
 import Link from "next/link";
 
 const CustomizedBreadCrumns = ({ slugNTitle }) => {
@@ -18,9 +18,9 @@ const CustomizedBreadCrumns = ({ slugNTitle }) => {
         </Link>
         {slugNTitle
           ? slugNTitle.map(({ slug, title }) => (
-              <Link href={slug} key={slug}>
-                <a>{title}</a>
-              </Link>
+             slug ?  <Link href={slug} key={slug}>
+             <a>{title}</a>
+           </Link> : <Typography>{title}</Typography>
             ))
           : null}
       </Breadcrumbs>

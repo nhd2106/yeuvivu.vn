@@ -20,8 +20,6 @@ import Container from "@material-ui/core/Container";
 import DDrawer from "./Drawer";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { useDispatch, useSelector } from "react-redux";
-import { signOutHandler } from "../../redux/actions/user";
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
@@ -80,14 +78,7 @@ export default function DNavbar({ navigations }) {
     }
     setOpen(open);
   };
-  const dispatch = useDispatch();
-  const user = useSelector(({ user }) => user.user);
-  const signOut = () => {
-    window.localStorage.clear();
-    googleAuth.signOut();
-    dispatch(signOutHandler());
-    handleClose();
-  };
+ 
 
   return (
     <>
