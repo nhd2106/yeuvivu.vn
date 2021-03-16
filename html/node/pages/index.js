@@ -21,9 +21,9 @@ function Home({
    const {
      ads1: adsPoster1,
      ads2: adsPoster2,
-     groupBanner,
+     groupbanner,
      instagram: profileImage
-   } = posters
+   } = posters;
   const { 
     title,
     keywords,
@@ -58,7 +58,7 @@ function Home({
         posts={posts}
         adsPoster1={adsPoster1}
         adsPoster2={adsPoster2}
-        groupBanner={groupBanner}
+        groupBanner={groupbanner}
         profileImage={profileImage}
         
         />
@@ -67,7 +67,7 @@ function Home({
         adsPoster1={adsPoster1}
         adsPoster2={adsPoster2}
         profileImage={profileImage}
-        groupBanner={groupBanner}
+        groupBanner={groupbanner}
         
         />
 

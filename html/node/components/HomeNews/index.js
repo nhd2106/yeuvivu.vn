@@ -41,14 +41,18 @@ const Homenews = styled.div`
     @media (max-width: 600px) {
       height: 210px;
     }
-    .item_image {
-      margin-right: 1rem;
-    }
     padding-bottom: 1rem;
     margin: 1rem 0;
     border-bottom: 1px solid #eee;
     img {
       border-radius: 4px;
+    }
+    .item_image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      max-width: 100%;
+      object-position: center;
     }
   }
   .isfloating {
@@ -91,7 +95,7 @@ const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
   const baseUrl = BACKEND();
   const [is_floating, setIs_floating] = useState(false);
   const [waiting, setWaiting] = useState(false);
-  const urlImage = adsPoster1 && adsPoster1.url ? adsPoster1.url.url : '';
+  const urlImage = adsPoster1 ? adsPoster1.url : '';
   const [posts, setPosts] = useState(initialPosts);
   const [num, setNum] = useState(2);
   const toggleVisibility = () => {
@@ -140,7 +144,7 @@ const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
                   <Hidden smUp><h3>{tieuDe}</h3></Hidden>
                   <Grid container spacing={2}>
                     <Grid  item xs={7} sm={4}>
-                      <img width="100%" src={anhGioiThieu ?`${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd"  height="auto" />
+                      <div> <img className="item_image" src={anhGioiThieu ?`${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd"  /></div>
                     </Grid>
                     <Grid item xs={5} sm={8}>
                     <Hidden only={['xs']}><h3>{tieuDe}</h3></Hidden>
