@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 async function fetchAPI(query, { variables } = {}) {
-   const baseURL = process.env.NODE_ENV === 'production' ? 'https://yeuvivu.vn:1337' : 'http://localhost:1337'
+   const baseURL = process.env.NODE_ENV === 'production' ? 'https://yeuvivu.vn:1337' : 'https://yeuvivu.vn:1337'
   const res = await fetch(`${baseURL}/graphql`, {
     method: "POST",
     headers: {

@@ -10,6 +10,7 @@ import {
   Box
 } from "@material-ui/core";
 import { BACKEND } from '../../libs/config';
+import { getDate } from '../../libs/utils';
 import { getAllPostsForHome } from '../../pages/api';
 
 const Homenews = styled.div`
@@ -69,6 +70,11 @@ const Homenews = styled.div`
     justify-content: center;
   }
   @media (max-width: 599px) {
+    .news_item {
+      .item_image {
+        height: 130px;
+      }
+    }
     .item_desc {
       font-size: 14px;
       line-height: 1.4;
@@ -148,15 +154,7 @@ const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
                     </Grid>
                     <Grid item xs={5} sm={8}>
                     <Hidden only={['xs']}><h3>{tieuDe}</h3></Hidden>
-                      {/* <span>{published_at}| {
-                        tags ? tags.map(({ tagName }, id) => <Link key={id} href="/"><a style={{
-                          fontWeight: '500',
-                          marginRight: '4px',
-                          color: 'grey',
-                          fontSize: '12px'
-                        }}>#{tagName}</a></Link>)
-                       : null
-                      }</span> */}
+                      <div>Ngày đăng: {getDate(published_at)}</div>
                       <div className="item_desc">{mota}</div>
                     </Grid>
                   </Grid>
