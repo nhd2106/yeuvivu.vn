@@ -1,48 +1,70 @@
-import Head from "next/head";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-
-import {
-  Typography,
-  Button,
-  Grid,
-  Hidden,
-} from "@material-ui/core";
+import { NextSeo } from 'next-seo';
+import Head from 'next/head';
+import _ from 'lodash';
 
 import TopNews from '../components/TopNews';
 import HomeNews from '../components/HomeNews';
+
 import {
   getAllPostsForHome,
-  getAdsPoster1,
-  getAdsPoster2,
-  getGroupBanner,
-  getProfileImage
+  getHomepageSeo,
+  getPosters,
+  countAllPosts
 } from './api';
 
 
 function Home({
   posts,
-  adsPoster1,
-  adsPoster2,
-  groupBanner,
-  profileImage
+  seoContent,
+  posters,
+  allPosts
  }) {
+   const {
+     ads1: adsPoster1,
+     ads2: adsPoster2,
+     groupbanner,
+     instagram: profileImage
+   } = posters;
+
+  const { 
+    title,
+    keywords,
+    image,
+    desccription,
+  } = seoContent;
+  const   {
+    url,
+    alternativeText
+  } = image || '';
+  const SEO = {
+    title,
+    description: desccription,
+    keywords,
+    openGraph: {
+      title,
+      images : [
+          {
+              url: `https://yeuvivu.vn:1337${url}`,
+              width: 800,
+              height: 600,
+              alt: alternativeText,
+          }
+      ]
+      
+  }
+}
   return (
     <div>
+      <NextSeo {...SEO}/>
       <Head>
-        <title>Yêu Vivu | Blog review, trải nghiệm, resort, villa, khách sạn, trip.</title>
-        <meta name="keywords" content="Yêu vivu, yeuvivu, yeu-vivu, Review, trải nghiệm, resort, villa, khách sạn, trips" />
-        <meta name="description" content="Yêu vivu, yeuvivu.vn Chuyên trang Review, trải nghiệm, resort, villa, khách sạn, trips
-            Cung cấp vouchers resort, villa, khách sạn có giá cả và trải nghệm tốt nhất." />
-        <meta name="author" content="Yêu vivu | đặt phòng khách sạn, book phòng, săn voucher, voucher siêu giảm giá" />
+        <meta name="keywords" content={`${keywords}`} />
       </Head>
       <section className="container">
         <TopNews
         posts={posts}
         adsPoster1={adsPoster1}
         adsPoster2={adsPoster2}
-        groupBanner={groupBanner}
+        groupBanner={groupbanner}
         profileImage={profileImage}
         
         />
@@ -50,9 +72,7 @@ function Home({
         posts={posts}
         adsPoster1={adsPoster1}
         adsPoster2={adsPoster2}
-        profileImage={profileImage}
-        groupBanner={groupBanner}
-        
+        allPosts={allPosts}
         />
 
       </section>
@@ -78,24 +98,14 @@ function Home({
 
 Home.getInitialProps = async (ctx) => {
   const posts = (await getAllPostsForHome(1)) || [];
-  const adsPoster1 = await getAdsPoster1();
-  const adsPoster2 = await getAdsPoster2();
-  const profileImage = await getProfileImage();
-  const groupBanner = await getGroupBanner();
+  const seoContent = await getHomepageSeo();
+  const posters = await getPosters();
+  const allPosts = await countAllPosts();
   return {
-    posts, adsPoster1, adsPoster2,  profileImage, groupBanner ,
+    posts: _.reverse(_.orderBy(posts, ['published_at'])),
+    seoContent,
+    posters,
+    allPosts
   }
 }
 export default Home;
-
-// export async function getStaticProps({ preview = null }) {
-//   const posts = (await getAllPostsForHome(preview)) || [];
-//   const adsPoster1 = await getAdsPoster1();
-//   const adsPoster2 = await getAdsPoster2();
-//   const profileImage = await getProfileImage();
-//   const groupBanner = await getGroupBanner();
-  
-//   return {
-//     props: { posts, preview, adsPoster1, adsPoster2,  profileImage, groupBanner },
-//   }
-// }

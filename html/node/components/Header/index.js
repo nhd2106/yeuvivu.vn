@@ -36,17 +36,22 @@ const NavigationsStyled = styled.div`
   .MuiToolbar-root {
     color: black;
   }
+  @media (min-width: 959px) {
+    .MuiToolbar-root {
+      align-self: center;
+    }
+  }
   @media (max-width: 600px) {
     .MuiAppBar-root {
       background: #F4AE15!important;
     }
   }
 `;
-export default function Header({ navigations }) {
+export default function Header({ linksAndPhone }) {
   return (
     <>
       <NavigationsStyled>
-        <DNavbar />
+        <DNavbar linksAndPhone={linksAndPhone}/>
       </NavigationsStyled>
     </>
   );

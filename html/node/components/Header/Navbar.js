@@ -3,27 +3,20 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, fade } from "@material-ui/core/styles";
 import clsx from "clsx";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Tooltip from "@material-ui/core/Tooltip";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuIcon from "@material-ui/icons/Menu";
 import Hidden from "@material-ui/core/Hidden";
-import Container from "@material-ui/core/Container";
 import DDrawer from "./Drawer";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import SearchIcon from '@material-ui/icons/Search';
+import Facebook from '@material-ui/icons/Facebook';
+import Instagram from '@material-ui/icons/Instagram';
+import Phone from '@material-ui/icons/Phone';
 import InputBase from '@material-ui/core/InputBase';
 
-import { Badge } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+  },
+  contactButton: {
+    marginRight: `${theme.spacing(1)}`,
+    marginLeft: `${theme.spacing(2)}!important`,
   },
   title: {
     flexGrow: 1,
@@ -47,9 +44,50 @@ const useStyles = makeStyles((theme) => ({
   list: {
     width: 250,
   },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    marginRight: 16,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+    border: '1px solid #CEC4BD',
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
 }));
 
-export default function DNavbar({ navigations }) {
+export default function DNavbar({ linksAndPhone }) {
   const router = useRouter();
   const currentSlug = router.asPath;
   const classes = useStyles();
@@ -60,6 +98,7 @@ export default function DNavbar({ navigations }) {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  
 
   const handleRouter = (link) => {
     router.push(link);
@@ -78,11 +117,15 @@ export default function DNavbar({ navigations }) {
     }
     setOpen(open);
   };
- 
+
 
   return (
     <>
-      <AppBar position="sticky" style={{ background: "white" }}>
+      <AppBar position="sticky" style={{
+        display: "flex",
+        background: 'white',
+        justifyContent: 'center'
+      }}>
         <Toolbar>
           <Hidden mdUp>
             <IconButton
@@ -95,12 +138,13 @@ export default function DNavbar({ navigations }) {
               <MenuIcon />
             </IconButton>
           </Hidden>
-          <div className="container"
-            style={{
-              display: "flex",
-              // justifyContent: "space-between",
-              alignItems: "center"
-            }}
+          <div className="desktopNavigations"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            alignSelf: 'center'
+          }}
           >
             <div
               style={{
@@ -125,35 +169,84 @@ export default function DNavbar({ navigations }) {
               display: 'flex',
               justifyContent: 'space-between',
             }}>
-            {[
-                  { title: "Điểm đến", slug: "/diem-den" },
-                  { title: "Ẩm thực", slug: "/am-thuc" },
-                  { title: "Lịch trình", slug: "/lich-trinh" },
-                  { title: "Review", slug: "/review" },
-                  { title: "Giảm giá", slug: "/giam-gia" },
-                ].map(({ title, slug }) => {
-                  return (
-                    <Hidden smDown key={slug}>
-                      <Link href={`${slug}`}>
-                        <a
-                          className={clsx(`${classes.linkMargin} `, {
-                            active: currentSlug === `/${slug}`,
-                          })}
-                        >
-                          {title}
-                        </a>
-                      </Link>
-                    </Hidden>
-                  );
-                })}
+              {[
+                { title: "Điểm đến", slug: "/diem-den" },
+                { title: "Ẩm thực", slug: "/am-thuc" },
+                { title: "Lịch trình", slug: "/lich-trinh" },
+                { title: "Review", slug: "/review" },
+                { title: "Giảm giá", slug: "/giam-gia" },
+              ].map(({ title, slug }) => {
+                return (
+                  <Hidden smDown key={slug}>
+                    <Link href={`${slug}`}>
+                      <a
+                        className={clsx(`${classes.linkMargin} `, {
+                          active: currentSlug === `/${slug}`,
+                        })}
+                      >
+                        {title}
+                      </a>
+                    </Link>
+                  </Hidden>
+                );
+              })}
             </div>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Tìm kiếm…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter')
+                    router.push(`/timkiem?key=${e.target.value}`)
+                }}
+              />
+            </div>
+            <Hidden className="header-contacts" smDown>
+            <a href={`tel:0${linksAndPhone?.phone}`}>
+            <IconButton
+              edge="start"
+              className={classes.contactButton}
+              color="blue"
+              aria-label="menu"
+              size="small"
+            >
+              <Phone />
+            </IconButton>
+            </a>
+            <IconButton
+              onClick={() => window.open(`${linksAndPhone?.facebook ?? ""}`)}
+              edge="start"
+              className={classes.contactButton}
+              color="blue"
+              aria-label="menu"
+              size="small"
+            >
+              <Facebook />
+            </IconButton>
+            <IconButton
+              onClick={() => window.open('https://facebook.com/yeuvivuvietnam')}
+              edge="start"
+              className={classes.contactButton}
+              color="blue"
+              aria-label="menu"
+              size="small"
+            >
+              <Instagram />
+            </IconButton>
+            </Hidden>
           </div>
         </Toolbar>
       </AppBar>
       <DDrawer
         open={open}
         toggleDrawer={toggleDrawer}
-        navigations={navigations}
       />
     </>
   );

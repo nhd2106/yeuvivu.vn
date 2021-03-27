@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 async function fetchAPI(query, { variables } = {}) {
-   const baseURL = process.env.NODE_ENV === 'production' ? 'https://yeuvivu.vn:1337' : 'http://localhost:1337'
+   const baseURL = process.env.NODE_ENV === 'production' ? 'https://yeuvivu.vn:1337' : 'https://yeuvivu.vn:1337'
   const res = await fetch(`${baseURL}/graphql`, {
     method: "POST",
     headers: {
@@ -42,61 +42,65 @@ export async function getPreviewPostBySlug(slug) {
   return data?.posts[0];
 }
 
-export async function getProfileImage() {
+
+export async function getHomepageSeo() {
   const data = await fetchAPI(
     `
     query {
-        socialPoster{
-               url {
-             url
-           }
-       }
+      homepageSeo {
+        title,
+        desccription,
+        keywords,
+        image{
+          url
+        }
+      }
      }
     `
   );
-  return data?.socialPoster;
+  return data?.homepageSeo;
 }
-export async function getAdsPoster1() {
+
+export async function getLinksAndPhone() {
   const data = await fetchAPI(
     `
     query {
-        adsPoster1{
-               url {
-             url
-           }
-       }
+      linksAndPhone {
+        facebook
+        instagram
+        phone
+      }
      }
     `
   );
-  return data?.adsPoster1;
+  return data?.linksAndPhone;
 }
-export async function getAdsPoster2() {
+
+export async function getPosters() {
   const data = await fetchAPI(
     `
     query {
-        adsPoster2{
-               url {
-             url
-           }
-       }
+      postersAndBanner {
+        ads1 {
+          url
+        },
+        ads2  {
+          url
+        },
+        groupbanner {
+          url
+        },
+        instagram {
+          url
+        }
+        tu_van_poster {
+          url
+        }
+      }
      }
     `
   );
-  return data?.adsPoster2;
-}
-export async function getGroupBanner() {
-  const data = await fetchAPI(
-    `
-    query {
-        groupBanner{
-               url {
-             url
-           }
-       }
-     }
-    `
-  );
-  return data?.groupBanner;
+  return data?.postersAndBanner;
 }
 
 export async function getAllPostsWithSlug() {
@@ -113,7 +117,7 @@ export async function getAllPostsWithSlug() {
 export async function getAllPostsForHome(number) {
   const data = await fetchAPI(
     ` query {
-            baiViets(start: ${number*4 -4}, limit: 4) {
+            baiViets(sort: "published_at:desc", start: ${number*9 -9}, limit: 9) {
               tieuDe,
               anhGioiThieu {
                 url
@@ -135,6 +139,44 @@ export async function getAllPostsForHome(number) {
   );
   return data?.baiViets;
 }
+
+export async function getAllSearchPosts() {
+  const data = await fetchAPI(
+    ` query {
+            baiViets{
+              tieuDe,
+              anhGioiThieu {
+                url
+              },
+              tags {
+                tagName
+              },
+              mien{
+                ten
+              },
+              published_at,
+              slug,
+              mota,
+              the_loai {
+                name
+              }
+            }
+          }`,
+  );
+  return data?.baiViets;
+}
+
+export async function countAllPosts() {
+  const data = await fetchAPI(
+    ` query {
+      baiViets {
+        id,
+      }
+    }`,
+  );
+  return data?.baiViets.length;
+}
+
 export async function getPostByType(name, number, mien) {
   const where = {
     the_loai: {
@@ -145,7 +187,7 @@ export async function getPostByType(name, number, mien) {
   const data = await fetchAPI(
          `
             query PostByType($where: JSON)  {
-            baiViets(where: $where, start: ${number*4 - 4}, limit: 4){
+            baiViets(sort: "published_at:desc", where: $where, start: ${number*9 - 9}, limit: 9){
             tieuDe,
             anhGioiThieu {
                 url
@@ -173,6 +215,29 @@ export async function getPostByType(name, number, mien) {
   );
   return data?.baiViets;
 }
+export async function countPostsByType(name, mien) {
+  const where = {
+    the_loai: {
+      name
+    },
+  }
+  if(mien) _.set(where, 'mien.ten', mien);
+  const data = await fetchAPI(
+         `
+            query PostByType($where: JSON)  {
+            baiViets(sort: "published_at:desc", where: $where){
+            id
+         }
+      }
+    `,
+    {
+      variables: {
+        where
+      },
+    }
+  );
+  return data?.baiViets.length;
+}
 
 export async function getPostAndMorePosts(slug, preview) {
     const data = await fetchAPI(
@@ -192,6 +257,7 @@ export async function getPostAndMorePosts(slug, preview) {
             noiDung,
             published_at,
             slug
+            mota
         }
      }
    `,
@@ -206,3 +272,4 @@ export async function getPostAndMorePosts(slug, preview) {
  );
   return data;
 }
+

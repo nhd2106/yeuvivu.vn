@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { Container } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import styled from 'styled-components';
 
 const FooterStyles = styled.div`
-  background: #1ba0e2;
+background: #F7F7F4;
   // height: 45vh;
-  color: white;
+  color: black;
   .footer {
     width: 80%;
     margin: auto;
@@ -14,25 +14,19 @@ const FooterStyles = styled.div`
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    border-bottom: 1px solid #3face2;
-    .right {
+    // border-top: 1px solid #D8D8D8;
+    border-bottom: 1px solid #D8D8D8;
+    .helps {
       display: flex;
-      flex: 3 1 20rem;
-      flex-wrap: wrap;
+      flex-direction: column;
       justify-content: space-between;
-      .helps {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        a {
-          margin-top: 1rem;
-        }
+      a {
+        margin-top: 1rem;
       }
     }
     .left {
       flex: 1 1 20rem;
       span {
-        color: #bae2f6;
         margin-top: 1rem;
       }
       .social {
@@ -55,28 +49,48 @@ const FooterStyles = styled.div`
     flex-direction: column;
     padding-bottom: 2rem;
   }
+  .heading {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 1rem 0;
+  }
+  .consultance {
+    line-height: 2rem;
+    display: flex;
+    flex-direction: column;
+    .contact {
+      color: #555555;
+      font-weight: bold;
+      a {
+        color: #FF5852;
+        font-weight: normal;
+      }
+    }
+    margin-bottom: 1rem;
+  }
 `;
 
-export default function Footer() {
+export default function Footer({ linksAndPhone }) {
   return (
     <>
       <FooterStyles>
         <div className="footer">
-          <div className="left">
-            <div>
-              <h1>Yêu Vivu</h1>
+          <Grid container>
+            <Grid item md={4}>
+            <div className="left">
+            <div className="heading">Yêu vivu</div>
               <span>
                 Đồng hành cùng kỳ nghỉ của bạn, <br></br> bọn mình luôn luôn có
                 giá ưu đãi nhất.
               </span>
               <ul className="social">
                 <li>
-                  <a href="https://www.facebook.com/cocotravelvn/" title="facebook-social-media">
+                  <a href={linksAndPhone?.facebook ?? ""} title="facebook-social-media">
                     <img src="/facebook.svg" alt="facebook-social-media" />
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.instagram.com" title="instagram-social-media">
+                  <a href={linksAndPhone?.instagram ?? ""} title="instagram-social-media">
                     <img src="/instagram.svg" alt="instagram-social-media" />
                   </a>
                 </li>
@@ -87,29 +101,25 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-          </div>
-          <div className="right">
-            <div>
-              <h2>Cần trợ giúp?</h2>
-              <div className="helps">
-                <Link href="/tro-giup">
-                  <a>. Đặt chỗ thế nào</a>
-                </Link>
-                <Link href="/lien-he">
-                  <a>. Liên hệ</a>
-                </Link>
-                <Link href="/tro-giup">
-                  <a>. Hỏi đáp</a>
-                </Link>
-                <Link href="/tro-giup">
-                  <a>. Tuyển dụng</a>
-                </Link>
-              </div>
-            </div>
-            <div>
-              <h2>Cần trợ giúp?</h2>
-            </div>
-          </div>
+            </Grid>
+          <Grid item md={4}>
+          <div className="consultance">
+              <div className="heading">Liên hệ tư vấn</div>
+              <p>Tư vấn thiết kế lịch trình du lịch, đặt phòng</p>
+              <p className="contact">Hotline: <a href={`tel:0${linksAndPhone?.phone}`}>0{linksAndPhone?.phone}</a></p>
+              <p className="contact">Fanpage: <a href={linksAndPhone?.facebook ?? ""} target="_blank">Yêu vivu</a></p>
+              <p className="contact">Instagram: <a href={linksAndPhone?.instagram ?? ""} target="_blank">Yêu vivu</a></p>
+        </div>
+            </Grid>
+            <Grid item md={4} xs={12} className="ads">
+              <div className="heading">Facebook fanpage</div>
+              <div class="fb-page"
+                data-href="https://www.facebook.com/yeuvivuvietnam"
+                data-width="300"
+                data-hide-cover="false"
+                data-show-facepile="true"></div>
+            </Grid>
+          </Grid>
         </div>
         <div className="copyright">
           <h2>Yêu Vivu</h2>

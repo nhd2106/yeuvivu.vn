@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import Waiting from "../components/Waiting";
 
 import SEO from "../next-seo.config";
+import { getLinksAndPhone } from './api';
 
 const useStyles = makeStyles({
   button: {
@@ -32,6 +33,7 @@ const useStyles = makeStyles({
 function App({ Component, pageProps }) {
   const [is_visible, setIs_visible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [linksAndPhone, setLinksAndPhone] = useState();
   Router.events.on("routeChangeStart", () => {
     setIsLoading(true);
   });
@@ -60,6 +62,11 @@ function App({ Component, pageProps }) {
       toggleVisibility();
     });
   }, []);
+
+  useEffect( async () => {
+    const data = await getLinksAndPhone();
+    setLinksAndPhone(data);
+  }, []);
   const classes = useStyles();
   return (
     <>
@@ -74,13 +81,16 @@ function App({ Component, pageProps }) {
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"></link>
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"></link>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="ywbB34Xn"></script>
+
       </Head>
       <StylesProvider injectFirst>
         <DefaultSeo {...SEO} />
         {isLoading ? <Waiting fullscreen type="WindMillLoading" /> : null}
-        <Header />
+        <Header linksAndPhone={linksAndPhone}/>
 
         <Component {...pageProps} />
+
         {is_visible ? (
           <Button
             variant="contained"
@@ -92,10 +102,11 @@ function App({ Component, pageProps }) {
             <ArrowUpwardIcon />
           </Button>
         ) : null}
-        <Footer />
+        <Footer linksAndPhone={linksAndPhone}/>
       </StylesProvider>
     </>
   );
 }
+
 
 export default App;

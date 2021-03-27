@@ -33,7 +33,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function DDrawer({ open, toggleDrawer, navigations }) {
+export default function DDrawer({ open, toggleDrawer }) {
   const classes = useStyles();
   const router = useRouter();
   const currentSlug = router.asPath;

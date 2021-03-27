@@ -5,10 +5,10 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   box-sizing: border-box;
   position: relative;
+  font-size: 17px;
 }
 ::after, ::before {
   box-sizing: border-box;
@@ -94,4 +94,12 @@ img {
 }
 img {
   border-radius: 8px;
+}
+h1 {
+  font-size: 27.2px;
+}
+@media (max-width: 599px) {
+  h1 {
+    font-size: 22.4px;
+  }
 }

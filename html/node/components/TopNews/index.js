@@ -16,10 +16,13 @@ const Wrapper = styled.div`
     .rightNews__item {
       margin-bottom: 1rem;
     }
+    .news_title {
+      
+    }
   }
   .groupBanner {
-    margin: 2rem 0;
-    padding: 5rem;
+    // margin: 2rem 0;
+    padding: 2rem;
     display: flex;
     justify-content: center;
   }
@@ -30,9 +33,10 @@ const Topnews = ({ posts, adsPoster1, groupBanner}) => {
   const top4lastest = posts ? posts.slice(0, 4) : null;
   const top3lastest = posts ? posts.slice(1, 4) : null;
   const top6lastest = posts ? posts.slice(0, 6) : null;
-  const lastest = top4lastest ? top4lastest[1] : null;
-  const urlImage = adsPoster1 && adsPoster1.url ? adsPoster1.url.url : '';
-  const groupBannerUrl = groupBanner && groupBanner.url ? groupBanner.url.url : '';
+  const lastest = top4lastest ? top4lastest[0] : null;
+  const urlImage = adsPoster1?.url ?? '';
+
+  const groupBannerUrl = groupBanner  ? groupBanner.url : '';
   return (
     <>
       <Wrapper>
@@ -74,7 +78,7 @@ const Topnews = ({ posts, adsPoster1, groupBanner}) => {
                         key={slug}
                       >
                         <a>
-                        <p style={{fontWeight: 500, fontSize: 15}}>{`- ${tieuDe}`}</p>
+                        <p className="news_title" style={{fontWeight: 500, fontSize: 15}}>{`- ${tieuDe}`}</p>
                         </a>
                       </Link>
                     )
@@ -104,7 +108,7 @@ const Topnews = ({ posts, adsPoster1, groupBanner}) => {
                                 src={`${baseurl}${url}`}
                               />
                             </div>
-                            <p style={{fontWeight: 500, fontSize: 15}}>{tieuDe}</p>
+                            <p className="news_title" style={{fontWeight: 500, fontSize: 15}}>{tieuDe}</p>
                           </div>
                         </a>
                       </Link>
