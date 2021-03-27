@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import Waiting from "../components/Waiting";
 
 import SEO from "../next-seo.config";
+import { getLinksAndPhone } from './api';
 
 const useStyles = makeStyles({
   button: {
@@ -32,6 +33,7 @@ const useStyles = makeStyles({
 function App({ Component, pageProps }) {
   const [is_visible, setIs_visible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [linksAndPhone, setLinksAndPhone] = useState();
   Router.events.on("routeChangeStart", () => {
     setIsLoading(true);
   });
@@ -60,6 +62,11 @@ function App({ Component, pageProps }) {
       toggleVisibility();
     });
   }, []);
+
+  useEffect( async () => {
+    const data = await getLinksAndPhone();
+    setLinksAndPhone(data);
+  }, []);
   const classes = useStyles();
   return (
     <>
@@ -80,7 +87,7 @@ function App({ Component, pageProps }) {
       <StylesProvider injectFirst>
         <DefaultSeo {...SEO} />
         {isLoading ? <Waiting fullscreen type="WindMillLoading" /> : null}
-        <Header />
+        <Header linksAndPhone={linksAndPhone}/>
 
         <Component {...pageProps} />
 
@@ -95,10 +102,11 @@ function App({ Component, pageProps }) {
             <ArrowUpwardIcon />
           </Button>
         ) : null}
-        <Footer />
+        <Footer linksAndPhone={linksAndPhone}/>
       </StylesProvider>
     </>
   );
 }
+
 
 export default App;

@@ -16,18 +16,11 @@ import Button from '@material-ui/core/Button';
 import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
 import { getDate } from '../../libs/utils';
-import { getPostAndMorePosts, getPosters } from '../api/index';
+import { getPostAndMorePosts, getPosters, getLinksAndPhone } from '../api/index';
 
-  const Wrapper = styled.div`
-    .cover-style:before {
-      content: '';
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-color: rgba(0,0,0,.5);
-   }
+const Wrapper = styled.div`
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #EEEEEE;
    .groupBanner {
     padding: 2rem;
     display: flex;
@@ -50,6 +43,7 @@ import { getPostAndMorePosts, getPosters } from '../api/index';
    .bottomShareButtons {
     margin: 1rem 0;
     padding-bottom: 1rem;
+    border-bottom: 1px solid #EEEEEE;
     }
    .date {
      display: inline-flex;
@@ -63,8 +57,25 @@ import { getPostAndMorePosts, getPosters } from '../api/index';
       }
     }
    }
+   .consultance {
+     line-height: 2rem;
+     h2 {
+       font-size: 28px;
+     }
+     display: flex;
+     flex-direction: column;
+     .contact {
+       color: #555555;
+       font-weight: bold;
+       a {
+         color: #FF5852;
+         font-weight: normal;
+       }
+     }
+     margin-bottom: 1rem;
+   }
   `
- const BlogStyles = styled.div`
+const BlogStyles = styled.div`
   img {
     width: 100%;
     height: 100%;
@@ -73,7 +84,7 @@ import { getPostAndMorePosts, getPosters } from '../api/index';
     width: 100%;
   }
 `;
-function Post({ posters, post }) {
+function Post({ posters, post, linksAndPhone }) {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -82,11 +93,13 @@ function Post({ posters, post }) {
   const tieuDe = post ? post.tieuDe : "";
   const mota = post ? post.mota : "";
   const groupBanner = posters?.groupbanner?.url ?? "";
+  const tu_van_poster = posters?.tu_van_poster?.url ?? "";
+
   const render = useMemo(() => {
     if (post) return { __html: post.noiDung };
   }, [post]);
   const slugNTitle = [
-    { slug: `/giam-gia`, title: 'Giảm giá'},
+    { slug: `/giam-gia`, title: 'Giảm giá' },
     { title: tieuDe },
   ];
   const baseUrl = BACKEND();
@@ -111,14 +124,14 @@ function Post({ posters, post }) {
   };
   return (
     <Wrapper className="container1">
-      <NextSeo {...SEO}/>
+      <NextSeo {...SEO} />
       <Hidden smDown>
-          <div  className="groupBanner">
-              <img src={`${baseUrl}${groupBanner}`} alt="group-banner" width="100%"/>
-          </div>
+        <div className="groupBanner">
+          <img src={`${baseUrl}${groupBanner}`} alt="group-banner" width="100%" />
+        </div>
       </Hidden>
       <BlogStyles>
-      <Breadcrumbs slugNTitle={slugNTitle} />
+        <Breadcrumbs slugNTitle={slugNTitle} />
         <div className="post_info">
           <h1>{tieuDe}</h1>
           <div className="tags">
@@ -129,15 +142,15 @@ function Post({ posters, post }) {
                 color: 'grey',
                 fontSize: '12px'
               }}>#{tagName}</a></Link>)
-            ) : null }
+            ) : null}
             <span className="date"><AccessTimeIcon style={{
               fontSize: '12px'
-            }}/><span>{getDate(post?.published_at)}</span></span>
+            }} /><span>{getDate(post?.published_at)}</span></span>
           </div>
           <div className="shareButtons">
-              <Button startIcon={<Facebook />} variant="contained" color="primary" size="small" onClick={() => {
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=https://yeuvivu.vn${router.asPath}`, "MsgWindow" , 'width=600,height=800')
-              }}>chia sẻ</Button>
+            <Button startIcon={<Facebook />} variant="contained" color="primary" size="small" onClick={() => {
+              window.open(`https://www.facebook.com/sharer/sharer.php?u=https://yeuvivu.vn${router.asPath}`, "MsgWindow", 'width=600,height=800')
+            }}>chia sẻ</Button>
           </div>
           <div>
             <i>{`"${mota}"`}</i>
@@ -147,9 +160,17 @@ function Post({ posters, post }) {
           dangerouslySetInnerHTML={render}
         />
         <div className="bottomShareButtons">
-              <Button startIcon={<Facebook />} variant="contained" color="primary" size="small" onClick={() => {
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=https://yeuvivu.vn${router.asPath}`, "MsgWindow" , 'width=600,height=800')
-              }}>chia sẻ</Button>
+          <Button startIcon={<Facebook />} variant="contained" color="primary" size="small" onClick={() => {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=https://yeuvivu.vn${router.asPath}`, "MsgWindow", 'width=600,height=800')
+          }}>chia sẻ</Button>
+        </div>
+        <div className="consultance">
+              <h2>Liên hệ tư vấn</h2>
+              <p>Tư vấn thiết kế lịch trình du lịch, đặt phòng</p>
+              <p className="contact">Hotline: <a href={`tel:${linksAndPhone?.phone}`}>0{linksAndPhone?.phone}</a></p>
+              <p className="contact">Fanpage: <a href={linksAndPhone?.facebook ?? ""} target="_blank">Yêu vivu</a></p>
+              <p className="contact">Instagram: <a href={linksAndPhone?.instagram ?? ""} target="_blank">Yêu vivu</a></p>
+              <img  src={`${baseUrl}${tu_van_poster}`} />
         </div>
       </BlogStyles>
     </Wrapper>
@@ -159,11 +180,13 @@ function Post({ posters, post }) {
 Post.getInitialProps = async (ctx) => {
   const data = await getPostAndMorePosts(ctx.query.slug);
   const posters = await getPosters();
+  const linksAndPhone = await getLinksAndPhone();
   return {
     post: {
       ...data?.baiViets[0],
     },
-    posters
+    posters,
+    linksAndPhone
   }
 }
 

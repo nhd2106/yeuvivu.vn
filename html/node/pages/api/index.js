@@ -42,63 +42,6 @@ export async function getPreviewPostBySlug(slug) {
   return data?.posts[0];
 }
 
-export async function getProfileImage() {
-  const data = await fetchAPI(
-    `
-    query {
-        socialPoster{
-               url {
-             url
-           }
-       }
-     }
-    `
-  );
-  return data?.socialPoster;
-}
-
-export async function getAdsPoster1() {
-  const data = await fetchAPI(
-    `
-    query {
-        adsPoster1{
-               url {
-             url
-           }
-       }
-     }
-    `
-  );
-  return data?.adsPoster1;
-}
-export async function getAdsPoster2() {
-  const data = await fetchAPI(
-    `
-    query {
-        adsPoster2{
-               url {
-             url
-           }
-       }
-     }
-    `
-  );
-  return data?.adsPoster2;
-}
-export async function getGroupBanner() {
-  const data = await fetchAPI(
-    `
-    query {
-        groupBanner{
-               url {
-             url
-           }
-       }
-     }
-    `
-  );
-  return data?.groupBanner;
-}
 
 export async function getHomepageSeo() {
   const data = await fetchAPI(
@@ -117,6 +60,22 @@ export async function getHomepageSeo() {
   );
   return data?.homepageSeo;
 }
+
+export async function getLinksAndPhone() {
+  const data = await fetchAPI(
+    `
+    query {
+      linksAndPhone {
+        facebook
+        instagram
+        phone
+      }
+     }
+    `
+  );
+  return data?.linksAndPhone;
+}
+
 export async function getPosters() {
   const data = await fetchAPI(
     `
@@ -132,6 +91,9 @@ export async function getPosters() {
           url
         },
         instagram {
+          url
+        }
+        tu_van_poster {
           url
         }
       }
@@ -203,6 +165,7 @@ export async function getAllSearchPosts() {
   );
   return data?.baiViets;
 }
+
 export async function countAllPosts() {
   const data = await fetchAPI(
     ` query {
