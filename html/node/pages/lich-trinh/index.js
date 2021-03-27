@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 
 
-import { getPostByType } from '../api';
+import { getPostByType, countPostsByType } from '../api';
 import { BACKEND } from '../../libs/config';
 
 
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Trang = ({posts: initialPosts}) => {
+const Trang = ({posts: initialPosts, allPosts: initialNumPosts}) => {
   const baseUrl = BACKEND();
   const classes = useStyles()
   const router = useRouter();
@@ -47,6 +47,8 @@ const Trang = ({posts: initialPosts}) => {
 
   const [is_floating, setIs_floating] = useState(false);
   const [posts, setPosts] = useState(initialPosts)
+  const [numPosts, setNumPosts] = useState(initialNumPosts);
+  console.log(numPosts)
   const { where } = router.query;
   const handleTag = (mien) => {
     const { pathname } = router;
@@ -66,9 +68,15 @@ const Trang = ({posts: initialPosts}) => {
   }, []);
   useEffect( async () => {
     if(where) {
-      const newPosts = await getPostByType("am-thuc", 1, where);
+      const newPosts = await getPostByType("lich-trinh", 1, where);
+      const newNumPosts = await countPostsByType("lich-trinh", where);
       setPosts(newPosts);
-    } else setPosts(initialPosts);
+      setNumPosts(newNumPosts);
+    } else {
+      setPosts(initialPosts);
+      setNumPosts(initialNumPosts);
+
+    };
   }, [where]);
   const SEO = {
     title,
@@ -193,9 +201,11 @@ const Trang = ({posts: initialPosts}) => {
 Trang.propTypes = {};
 
 Trang.getInitialProps = async (ctx) => {
-  const posts = (await getPostByType("lich-trinh", 1)) || []
+  const posts = (await getPostByType("lich-trinh", 1)) || [];
+  const allPosts = await countPostsByType("lich-trinh");
     return {
-      posts
+      posts,
+      allPosts
     }
 }
 
