@@ -31,6 +31,7 @@ function Home({
     image,
     description,
   } = seoContent;
+
   const   {
     url,
     alternativeText
@@ -40,6 +41,7 @@ function Home({
     description,
     keywords,
     openGraph: {
+      title,
       images : [
           {
               url: `https://yeuvivu.vn:1337${url}`,

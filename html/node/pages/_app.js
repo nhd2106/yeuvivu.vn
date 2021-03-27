@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import Waiting from "../components/Waiting";
 
 import SEO from "../next-seo.config";
+import { getHomepageSeo } from './api';
 
 const useStyles = makeStyles({
   button: {
@@ -32,6 +33,8 @@ const useStyles = makeStyles({
 function App({ Component, pageProps }) {
   const [is_visible, setIs_visible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [seoContent, setSeoContent] = useState({});
+  const  keywords = seoContent?.keywords ?? "keywords";
   Router.events.on("routeChangeStart", () => {
     setIsLoading(true);
   });
@@ -51,7 +54,7 @@ function App({ Component, pageProps }) {
       behavior: "smooth",
     });
   };
-  useEffect(() => {
+  useEffect( () => {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
@@ -59,13 +62,21 @@ function App({ Component, pageProps }) {
     document.addEventListener("scroll", function (e) {
       toggleVisibility();
     });
+   
   }, []);
+  useEffect( async () => {
+    const data = await getHomepageSeo();
+    setSeoContent(data);
+   
+  }, []);
+
   const classes = useStyles();
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-site-verification" content="dw2DXuLj4BThK7IfgcxvNgu_QBEV9VdSw_-S4cei_gU" />
+        <meta name="keywords" content={`${keywords}`} />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -97,5 +108,4 @@ function App({ Component, pageProps }) {
     </>
   );
 }
-
 export default App;
