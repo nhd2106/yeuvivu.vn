@@ -294,6 +294,7 @@ export async function getPostAndMorePosts(slug, preview) {
             noiDung,
             published_at,
             slug
+            mota
         }
      }
    `,

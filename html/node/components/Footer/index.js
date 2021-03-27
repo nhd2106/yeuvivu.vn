@@ -71,7 +71,7 @@ export default function Footer() {
               </span>
               <ul className="social">
                 <li>
-                  <a href="https://www.facebook.com/yeuvivu.vn/" title="facebook-social-media">
+                  <a href="https://www.facebook.com/yeuvivuvietnam" title="facebook-social-media">
                     <img src="/facebook.svg" alt="facebook-social-media" />
                   </a>
                 </li>

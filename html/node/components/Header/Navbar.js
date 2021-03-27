@@ -14,7 +14,6 @@ import DDrawer from "./Drawer";
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
-import { Badge } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -191,7 +190,7 @@ export default function DNavbar({ navigations }) {
               inputProps={{ 'aria-label': 'search' }}
               onKeyDown={(e)=> {
                 if(e.key === 'Enter') 
-                console.log(e.target.value)
+                router.push(`/timkiem?key=${e.target.value}`)
               }}
             />
           </div>

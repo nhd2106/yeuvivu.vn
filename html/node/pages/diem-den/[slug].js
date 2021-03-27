@@ -5,15 +5,15 @@ import ErrorPage from 'next/error'
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-
 
 import styled from 'styled-components';
 import _ from 'lodash';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import Hidden from '@material-ui/core/Hidden';
 
 import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
+import { getDate } from '../../libs/utils';
 import { getPostAndMorePosts, getPosters } from '../api/index';
 
   const Wrapper = styled.div`
@@ -26,10 +26,37 @@ import { getPostAndMorePosts, getPosters } from '../api/index';
       left: 0;
       background-color: rgba(0,0,0,.5);
    }
+   .groupBanner {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    }
    .post_info {
-     padding: 2rem 0;
+     margin: 1rem 0;
+     h1 {
+       font-size: 27.2px;
+     }
+     .tags {
+       border-bottom: 1px solid #EEEEEE;
+       margin-bottom: 1rem;
+       padding-bottom: 1rem;
+     }
+     i {
+       font-weight: 500;
+     }
+   }
+   .date {
+     display: inline-flex;
+     align-items: center;
    }
    margin-bottom: 2rem;
+   @media (max-width: 600px) {
+    .post_info {
+      h1 {
+        font-size: 22.4px;
+      }
+    }
+   }
   `
  const BlogStyles = styled.div`
   img {
@@ -40,16 +67,6 @@ import { getPostAndMorePosts, getPosters } from '../api/index';
     width: 100%;
   }
 `;
-
-const pageTitleMapping = {
-  ["diem-den"]: "Điểm đến",
-  ["giam-gia"]: "Giảm giá",
-  ["lich-trinh"]: "Lịch trình",
-  ["am-thuc"]: "Ẩm thực",
-  ["review"]: "Review",
-};
-
-
 function Post({ posters, post }) {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
@@ -57,6 +74,9 @@ function Post({ posters, post }) {
   }
   const { slug, Trang } = router.query;
   const tieuDe = post ? post.tieuDe : "";
+  const mota = post ? post.mota : "";
+  const groupBanner = posters?.groupbanner?.url ?? "";
+
   const render = useMemo(() => {
     if (post) return { __html: post.noiDung };
   }, [post]);
@@ -87,11 +107,16 @@ function Post({ posters, post }) {
   return (
     <Wrapper className="container1">
       <NextSeo {...SEO}/>
+      <Hidden smDown>
+          <div  className="groupBanner">
+              <img src={`${baseUrl}${groupBanner}`} alt="group-banner" width="100%"/>
+          </div>
+      </Hidden>
       <BlogStyles>
       <Breadcrumbs slugNTitle={slugNTitle} />
         <div className="post_info">
           <h1>{tieuDe}</h1>
-          <div>
+          <div className="tags">
             {post && post.tags ? (
               post.tags.map(({ tagName }, id) => <Link key={id} href="/"><a style={{
                 fontWeight: '500',
@@ -100,11 +125,12 @@ function Post({ posters, post }) {
                 fontSize: '12px'
               }}>#{tagName}</a></Link>)
             ) : null }
-            <span style={{
+            <span className="date"><AccessTimeIcon style={{
               fontSize: '12px'
-            }}><AccessTimeIcon style={{
-              fontSize: '12px'
-            }}/><span>{post && post.published_at}</span></span>
+            }}/><span>{getDate(post?.published_at)}</span></span>
+          </div>
+          <div>
+            <i>{`"${mota}"`}</i>
           </div>
         </div>
         <div className='post-content'
@@ -127,25 +153,3 @@ Post.getInitialProps = async (ctx) => {
 }
 
 export default Post;
-
-// export async function getStaticProps({ params, preview = null }) {
-//   const data = await getPostAndMorePosts(params.slug, preview);
-
-//   return {
-//     props: {
-//       preview,
-//       post: {
-//         ...data?.baiViets[0],
-//       },
-//     },
-//   }
-// }
-
-
-// export async function getStaticPaths() {
-//   const allPosts = await getAllPostsWithSlug();
-//   return {
-//     paths: allPosts?.map((post) => `/diem-den/${post.slug}`) || [],
-//     fallback: true,
-//   }
-// }

@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useCallback } from "react";
+import React, { useEffect, useMemo } from "react";
 import ErrorPage from 'next/error'
 
 
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
 
 
 import styled from 'styled-components';
@@ -14,7 +13,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
-import { getAllPostsWithSlug, getPostAndMorePosts, getAllPostsForHome } from '../api/index';
+import { getPostAndMorePosts } from '../api/index';
 
   const Wrapper = styled.div`
     .cover-style:before {
@@ -54,14 +53,12 @@ function Post({ preview, post }) {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
-  const dispatch = useDispatch();
+
+
   const { slug, Trang } = router.query;
   const tieuDe = post ? post.tieuDe : "";
   useEffect(() => {
     const theLoai = Trang;
-    if(theLoai && slug) {
-      dispatch(handlerGetPostDetails(slug, theLoai));
-    }
   }, [slug, Trang]);
   const render = useMemo(() => {
     if (post) return { __html: post.noiDung };

@@ -95,3 +95,11 @@ img {
 img {
   border-radius: 8px;
 }
+h1 {
+  font-size: 27.2px;
+}
+@media (max-width: 599px) {
+  h1 {
+    font-size: 22.4px;
+  }
+}
