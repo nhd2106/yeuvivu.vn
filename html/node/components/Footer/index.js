@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import styled from 'styled-components';
 
@@ -16,18 +16,12 @@ background: #F7F7F4;
     flex-wrap: wrap;
     // border-top: 1px solid #D8D8D8;
     border-bottom: 1px solid #D8D8D8;
-    .right {
+    .helps {
       display: flex;
-      flex: 3 1 20rem;
-      flex-wrap: wrap;
+      flex-direction: column;
       justify-content: space-between;
-      .helps {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        a {
-          margin-top: 1rem;
-        }
+      a {
+        margin-top: 1rem;
       }
     }
     .left {
@@ -55,23 +49,22 @@ background: #F7F7F4;
     flex-direction: column;
     padding-bottom: 2rem;
   }
-  .ads{
-    width: 60%;
-  }
   .heading {
     font-size: 20px;
     font-weight: 600;
+    margin: 1rem 0;
   }
 `;
 
 export default function Footer() {
   return (
     <>
-      <FooterStyles >
+      <FooterStyles>
         <div className="footer">
-          <div className="left">
-            <div>
-              <h1>Yêu Vivu</h1>
+          <Grid container>
+            <Grid item md={4}>
+            <div className="left">
+            <h1>Yêu Vivu</h1>
               <span>
                 Đồng hành cùng kỳ nghỉ của bạn, <br></br> bọn mình luôn luôn có
                 giá ưu đãi nhất.
@@ -94,9 +87,8 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-          </div>
-          <div className="right">
-            <div>
+            </Grid>
+          <Grid item md={4}>
               <div className="heading">Cần trợ giúp?</div>
               <div className="helps">
                 <Link href="/tro-giup">
@@ -112,16 +104,16 @@ export default function Footer() {
                   <a>. Tuyển dụng</a>
                 </Link>
               </div>
-            </div>
-            <div className="ads">
+            </Grid>
+            <Grid item md={4} xs={12} className="ads">
               <div className="heading">Facebook fanpage</div>
               <div class="fb-page"
                 data-href="https://www.facebook.com/yeuvivuvietnam"
-                data-width="380"
+                data-width="300"
                 data-hide-cover="false"
                 data-show-facepile="true"></div>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </div>
         <div className="copyright">
           <h2>Yêu Vivu</h2>
