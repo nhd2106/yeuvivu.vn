@@ -120,7 +120,11 @@ export default function DNavbar({ navigations }) {
 
   return (
     <>
-      <AppBar position="sticky" className="appBar">
+      <AppBar position="sticky" style={{
+        display: "flex",
+        background: 'white',
+        justifyContent: 'center'
+      }}>
         <Toolbar>
           <Hidden mdUp>
             <IconButton
@@ -134,6 +138,12 @@ export default function DNavbar({ navigations }) {
             </IconButton>
           </Hidden>
           <div className="desktopNavigations"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            alignSelf: 'center'
+          }}
           >
             <div
               style={{

@@ -5,12 +5,7 @@ const NavigationsStyled = styled.div`
   position: sticky;
   top: 0;
   z-index: 1000;
-  color: white;
-  .appBar {
-    background: white;
-    display: flex;
-    justify-content: center;
-  }
+  color: white;=
   .top-header {
     background-color: #ffa900;
     .top-brand {
@@ -25,12 +20,6 @@ const NavigationsStyled = styled.div`
   .active {
     color: yellow;
     text-decoration: none !important;
-  }
-  .desktopNavigations {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-self: center;
   }
   a {
     color: black;
