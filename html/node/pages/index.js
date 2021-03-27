@@ -1,4 +1,5 @@
 import { NextSeo } from 'next-seo';
+import Head from 'next/head';
 import _ from 'lodash';
 
 import TopNews from '../components/TopNews';
@@ -56,6 +57,9 @@ function Home({
   return (
     <div>
       <NextSeo {...SEO}/>
+      <Head>
+        <meta name="keywords" content={`${keywords}`} />
+      </Head>
       <section className="container">
         <TopNews
         posts={posts}
