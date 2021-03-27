@@ -4,17 +4,18 @@ import { Container } from "@material-ui/core";
 import styled from 'styled-components';
 
 const FooterStyles = styled.div`
-  background: #1ba0e2;
+// background: #F4AE15;
   // height: 45vh;
-  color: white;
+  // color: white;
   .footer {
-    width: 80%;
-    margin: auto;
+    // width: 80%;
+    // margin: auto;
     padding: 5rem 0;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    border-bottom: 1px solid #3face2;
+    border-top: 1px solid #D8D8D8;
+    border-bottom: 1px solid #D8D8D8;
     .right {
       display: flex;
       flex: 3 1 20rem;
@@ -32,7 +33,6 @@ const FooterStyles = styled.div`
     .left {
       flex: 1 1 20rem;
       span {
-        color: #bae2f6;
         margin-top: 1rem;
       }
       .social {
@@ -60,7 +60,7 @@ const FooterStyles = styled.div`
 export default function Footer() {
   return (
     <>
-      <FooterStyles>
+      <FooterStyles className="container">
         <div className="footer">
           <div className="left">
             <div>
@@ -71,7 +71,7 @@ export default function Footer() {
               </span>
               <ul className="social">
                 <li>
-                  <a href="https://www.facebook.com/cocotravelvn/" title="facebook-social-media">
+                  <a href="https://www.facebook.com/yeuvivu.vn/" title="facebook-social-media">
                     <img src="/facebook.svg" alt="facebook-social-media" />
                   </a>
                 </li>

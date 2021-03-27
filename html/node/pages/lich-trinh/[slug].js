@@ -123,6 +123,7 @@ const pageTitleMapping = {
 }
 Post.getInitialProps = async (ctx) => {
   const data = await getPostAndMorePosts(ctx.query.slug);
+  
 
   return {
     post: {

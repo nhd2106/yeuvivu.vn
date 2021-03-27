@@ -177,6 +177,32 @@ export async function getAllPostsForHome(number) {
   );
   return data?.baiViets;
 }
+
+export async function getAllSearchPosts() {
+  const data = await fetchAPI(
+    ` query {
+            baiViets{
+              tieuDe,
+              anhGioiThieu {
+                url
+              },
+              tags {
+                tagName
+              },
+              mien{
+                ten
+              },
+              published_at,
+              slug,
+              mota,
+              the_loai {
+                name
+              }
+            }
+          }`,
+  );
+  return data?.baiViets;
+}
 export async function getPostByType(name, number, mien) {
   const where = {
     the_loai: {

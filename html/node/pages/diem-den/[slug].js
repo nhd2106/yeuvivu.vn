@@ -117,7 +117,7 @@ function Post({ preview, post }) {
 
 Post.getInitialProps = async (ctx) => {
   const data = await getPostAndMorePosts(ctx.query.slug);
-
+  
   return {
     post: {
       ...data?.baiViets[0],
