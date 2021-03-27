@@ -6,6 +6,11 @@ const NavigationsStyled = styled.div`
   top: 0;
   z-index: 1000;
   color: white;
+  .appBar {
+    background: white;
+    display: flex;
+    justify-content: center;
+  }
   .top-header {
     background-color: #ffa900;
     .top-brand {
@@ -21,6 +26,12 @@ const NavigationsStyled = styled.div`
     color: yellow;
     text-decoration: none !important;
   }
+  .desktopNavigations {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+  }
   a {
     color: black;
     // text-transform: uppercase;
@@ -35,6 +46,11 @@ const NavigationsStyled = styled.div`
   }
   .MuiToolbar-root {
     color: black;
+  }
+  @media (min-width: 959px) {
+    .MuiToolbar-root {
+      align-self: center;
+    }
   }
   @media (max-width: 600px) {
     .MuiAppBar-root {

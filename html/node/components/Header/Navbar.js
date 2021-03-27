@@ -12,6 +12,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Hidden from "@material-ui/core/Hidden";
 import DDrawer from "./Drawer";
 import SearchIcon from '@material-ui/icons/Search';
+import Facebook from '@material-ui/icons/Facebook';
+import Instagram from '@material-ui/icons/Instagram';
+import Phone from '@material-ui/icons/Phone';
 import InputBase from '@material-ui/core/InputBase';
 
 
@@ -21,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+  },
+  contactButton: {
+    marginRight: `${theme.spacing(1)}`,
+    marginLeft: `${theme.spacing(2)}!important`,
   },
   title: {
     flexGrow: 1,
@@ -45,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
+    marginRight: 16,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
@@ -108,11 +116,11 @@ export default function DNavbar({ navigations }) {
     }
     setOpen(open);
   };
- 
+
 
   return (
     <>
-      <AppBar position="sticky" style={{ background: "white" }}>
+      <AppBar position="sticky" className="appBar">
         <Toolbar>
           <Hidden mdUp>
             <IconButton
@@ -125,12 +133,7 @@ export default function DNavbar({ navigations }) {
               <MenuIcon />
             </IconButton>
           </Hidden>
-          <div className="container"
-            style={{
-              display: "flex",
-              // justifyContent: "space-between",
-              alignItems: "center"
-            }}
+          <div className="desktopNavigations"
           >
             <div
               style={{
@@ -155,45 +158,79 @@ export default function DNavbar({ navigations }) {
               display: 'flex',
               justifyContent: 'space-between',
             }}>
-            {[
-                  { title: "Điểm đến", slug: "/diem-den" },
-                  { title: "Ẩm thực", slug: "/am-thuc" },
-                  { title: "Lịch trình", slug: "/lich-trinh" },
-                  { title: "Review", slug: "/review" },
-                  { title: "Giảm giá", slug: "/giam-gia" },
-                ].map(({ title, slug }) => {
-                  return (
-                    <Hidden smDown key={slug}>
-                      <Link href={`${slug}`}>
-                        <a
-                          className={clsx(`${classes.linkMargin} `, {
-                            active: currentSlug === `/${slug}`,
-                          })}
-                        >
-                          {title}
-                        </a>
-                      </Link>
-                    </Hidden>
-                  );
-                })}
+              {[
+                { title: "Điểm đến", slug: "/diem-den" },
+                { title: "Ẩm thực", slug: "/am-thuc" },
+                { title: "Lịch trình", slug: "/lich-trinh" },
+                { title: "Review", slug: "/review" },
+                { title: "Giảm giá", slug: "/giam-gia" },
+              ].map(({ title, slug }) => {
+                return (
+                  <Hidden smDown key={slug}>
+                    <Link href={`${slug}`}>
+                      <a
+                        className={clsx(`${classes.linkMargin} `, {
+                          active: currentSlug === `/${slug}`,
+                        })}
+                      >
+                        {title}
+                      </a>
+                    </Link>
+                  </Hidden>
+                );
+              })}
             </div>
             <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Tìm kiếm…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter')
+                    router.push(`/timkiem?key=${e.target.value}`)
+                }}
+              />
             </div>
-            <InputBase
-              placeholder="Tìm kiếm…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              onKeyDown={(e)=> {
-                if(e.key === 'Enter') 
-                router.push(`/timkiem?key=${e.target.value}`)
-              }}
-            />
-          </div>
+            <Hidden className="header-contacts" smDown>
+            <a href="tel:0396962891">
+            <IconButton
+              // onClick={() => window.open('tel:+0396962891')}
+              edge="start"
+              className={classes.contactButton}
+              color="blue"
+              aria-label="menu"
+              size="small"
+            >
+              <Phone />
+            </IconButton>
+            </a>
+            <IconButton
+              onClick={() => window.open('https://facebook.com/yeuvivuvietnam')}
+              edge="start"
+              className={classes.contactButton}
+              color="blue"
+              aria-label="menu"
+              size="small"
+            >
+              <Facebook />
+            </IconButton>
+            <IconButton
+              onClick={() => window.open('https://facebook.com/yeuvivuvietnam')}
+              edge="start"
+              className={classes.contactButton}
+              color="blue"
+              aria-label="menu"
+              size="small"
+            >
+              <Instagram />
+            </IconButton>
+            </Hidden>
           </div>
         </Toolbar>
       </AppBar>

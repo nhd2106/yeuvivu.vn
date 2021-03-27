@@ -19,6 +19,8 @@ import { getDate } from '../../libs/utils';
 import { getPostAndMorePosts, getPosters } from '../api/index';
 
   const Wrapper = styled.div`
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #757575;
     .cover-style:before {
       content: '';
       width: 100%;
@@ -82,7 +84,6 @@ function Post({ posters, post }) {
   const tieuDe = post ? post.tieuDe : "";
   const mota = post ? post.mota : "";
   const groupBanner = posters?.groupbanner?.url ?? "";
-  console.log(router.asPath)
   const render = useMemo(() => {
     if (post) return { __html: post.noiDung };
   }, [post]);
@@ -95,7 +96,7 @@ function Post({ posters, post }) {
   const SEO = {
     title: post ? post.tieuDe : '',
     openGraph: {
-      title: post ? post.tieuDe : '',
+      title: post ? `Yêu vivu | ${post.tieuDe}` : '',
       type: 'Blog',
       locale: 'vi_VN',
       url: `https://yeuvivu.vn${router.asPath}`,
