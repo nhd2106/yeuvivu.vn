@@ -168,7 +168,7 @@ function Post({ posters, post, linksAndPhone }) {
         <div className="consultance">
               <h2>Liên hệ tư vấn</h2>
               <p>Tư vấn thiết kế lịch trình du lịch, đặt phòng</p>
-              <p className="contact">Hotline: <a href={`tel:${linksAndPhone?.phone}`}>0{linksAndPhone?.phone}</a></p>
+              <p className="contact">Hotline: <a href={`tel:0${linksAndPhone?.phone}`}>0{linksAndPhone?.phone}</a></p>
               <p className="contact">Fanpage: <a href={linksAndPhone?.facebook ?? ""} target="_blank">Yêu vivu</a></p>
               <p className="contact">Instagram: <a href={linksAndPhone?.instagram ?? ""} target="_blank">Yêu vivu</a></p>
               <img  src={`${baseUrl}${tu_van_poster}`} />

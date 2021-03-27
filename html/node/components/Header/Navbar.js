@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DNavbar({ navigations }) {
+export default function DNavbar({ linksAndPhone }) {
   const router = useRouter();
   const currentSlug = router.asPath;
   const classes = useStyles();
@@ -98,6 +98,7 @@ export default function DNavbar({ navigations }) {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  
 
   const handleRouter = (link) => {
     router.push(link);
@@ -208,9 +209,8 @@ export default function DNavbar({ navigations }) {
               />
             </div>
             <Hidden className="header-contacts" smDown>
-            <a href="tel:0396962891">
+            <a href={`tel:0${linksAndPhone?.phone}`}>
             <IconButton
-              // onClick={() => window.open('tel:+0396962891')}
               edge="start"
               className={classes.contactButton}
               color="blue"
@@ -221,7 +221,7 @@ export default function DNavbar({ navigations }) {
             </IconButton>
             </a>
             <IconButton
-              onClick={() => window.open('https://facebook.com/yeuvivuvietnam')}
+              onClick={() => window.open(`${linksAndPhone?.facebook ?? ""}`)}
               edge="start"
               className={classes.contactButton}
               color="blue"
@@ -247,7 +247,6 @@ export default function DNavbar({ navigations }) {
       <DDrawer
         open={open}
         toggleDrawer={toggleDrawer}
-        navigations={navigations}
       />
     </>
   );

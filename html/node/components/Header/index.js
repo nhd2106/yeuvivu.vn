@@ -47,11 +47,11 @@ const NavigationsStyled = styled.div`
     }
   }
 `;
-export default function Header({ navigations }) {
+export default function Header({ linksAndPhone }) {
   return (
     <>
       <NavigationsStyled>
-        <DNavbar />
+        <DNavbar linksAndPhone={linksAndPhone}/>
       </NavigationsStyled>
     </>
   );
