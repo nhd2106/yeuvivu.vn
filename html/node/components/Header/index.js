@@ -5,7 +5,7 @@ const NavigationsStyled = styled.div`
   position: sticky;
   top: 0;
   z-index: 1000;
-  color: white;=
+  color: white;
   .top-header {
     background-color: #ffa900;
     .top-brand {
