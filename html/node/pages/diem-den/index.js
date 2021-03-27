@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import styled from "styled-components";
 import _ from 'lodash';
-import { BACKEND } from '../../libs/config';
-import { getDate } from '../../libs/utils';
+import { NextSeo } from 'next-seo';
+
+
 
 import {
   Breadcrumbs,
@@ -15,17 +15,15 @@ import {
   Hidden,
   Box
 } from "@material-ui/core";
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+
 import {
   getPostByType,
-  getAdsPoster1,
-  getAdsPoster2,
-  getGroupBanner,
-  getProfileImage,
-  getHomepageSeo,
-  getPosters
-
+  getPosters,
+  countPostsByType
 } from '../api';
+import { BACKEND } from '../../libs/config';
+import { getDate } from '../../libs/utils';
 
 
 const Wrapper = styled.div`
@@ -34,12 +32,41 @@ const Wrapper = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 3rem;
+        padding: 1rem;
         h3 {
             margin-bottom: 1rem;
         }
     }
-    
+    .groupBanner {
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .where {
+      display: flex;
+      justify-content: center;
+    }
+    .top2_image {
+      width: 100%;
+      height: 35vh;
+    }
+    .top4_image {
+      width: 100%;
+      height: 20vh;
+    }
+    @media (max-width: 768px) {
+      .top2_image {
+        height: 20vh;
+      }
+    }
+    @media (max-width: 600px) {
+      .top2_image {
+        height: 18vh;
+      }
+      .top4_image {
+        height: 18vh;
+      }
+    }
 `;
 const Homenews = styled.div`
 
@@ -87,7 +114,7 @@ const Homenews = styled.div`
   .isfloating {
     position: fixed;
     top: 15%;
-    bottom: 10%
+    bottom: 426px;
   }
   .item_desc {
     overflow: hidden;
@@ -130,27 +157,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Trang = ({ posts: initialPosts, adsPoster1 }) => {
+const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
   const baseUrl = BACKEND();
   const classes = useStyles()
   const router = useRouter();
   const title = "Điểm đến"
   const [posts, setPosts] = useState(initialPosts)
+  const [numPosts, setNumPosts] = useState(initialNumPosts);
   const [num, setNum] = useState(2);
-  const urlImage = adsPoster1 ? adsPoster1.url : '';
+  const [is_floating, setIs_floating] = useState(false);
+  const [waiting, setWaiting] = useState(false);
+
+  const ads1 = posters?.ads1?.url ?? "";
+  const ads2 = posters?.ads2?.url ?? "";
+  const groupBanner = posters?.groupbanner?.url ?? "";
+
   const handleTag = (mien) => {
     const { pathname } = router;
     router.push(`${pathname}?where=${mien}`)
-  }
-  const [is_floating, setIs_floating] = useState(false);
-  const [waiting, setWaiting] = useState(false);
+  };
+  
+  const top2lastest = posts ? posts.slice(0, 2) : null;
+  const top4lastest = posts ? posts.slice(2, 6) : null;
+
   const handleLoadMore = async () => {
     setWaiting(true)
     const newPosts = await getPostByType("diem-den", num, where);
     setPosts((prev) => ([...prev, ...newPosts ]));
     setWaiting(false)
     setNum((prev) => prev +=1 );
-};
+  };
   const toggleVisibility = () => {
     if (window.pageYOffset > 1500) {
       setIs_floating(true);
@@ -163,16 +199,51 @@ const Trang = ({ posts: initialPosts, adsPoster1 }) => {
       toggleVisibility();
     });
   }, []);
+
   const where = router.query.where
+
   useEffect(async () => {
     if (where) {
       const newPosts = await getPostByType("diem-den", 1, where);
       setPosts(newPosts);
-    } else setPosts(initialPosts);
+      const newNumPosts = await countPostsByType("lich-trinh", where);
+      setNumPosts(newNumPosts);
+    } else {
+      setPosts(initialPosts);
+      setNumPosts(initialNumPosts);
+
+    };
   }, [where]);
+  const imageSeo = posts[0]?.anhGioiThieu?.url
+  const SEO = {
+    title,
+    keywords: 'keywords',
+    description: '',
+    openGraph: {
+      title,
+      type: 'Blog',
+      locale: 'vi_VN',
+      url: `https://yeuvivu.vn${router.asPath}`,
+      site_name: 'yeuvivu',
+      images: [
+        {
+          url: `https://yeuvivu.vn:1337${imageSeo}`,
+          width: 800,
+          height: 600,
+          alt: 'yeuvivu-diemden',
+        },
+      ],
+    }
+  }
 
   return (
     <Wrapper className="container">
+      <NextSeo {...SEO}/>
+      <Hidden smDown>
+          <div  className="groupBanner">
+              <img src={`${baseUrl}${groupBanner}`} alt="group-banner" width="100%"/>
+          </div>
+        </Hidden>
       <div className="titleNBreadCrumbs">
         <h2>{title}</h2>
         <div>
@@ -183,7 +254,8 @@ const Trang = ({ posts: initialPosts, adsPoster1 }) => {
             <Typography color="textPrimary">{title}</Typography>
           </Breadcrumbs>
         </div>
-        <div className="tags">
+      </div>
+      <div className="where">
           <Button variant="contained" className={classes.margin} onClick={() => handleTag('bac')}>
             Bắc
             </Button>
@@ -194,19 +266,51 @@ const Trang = ({ posts: initialPosts, adsPoster1 }) => {
             Nam
             </Button>
         </div>
-        <Grid container spacing={2}>
-          <Grid container item md={12} spacing={2}>
-            <Grid item md={12} sm={12} xs={12}>
-
-            </Grid>
+      <Homenews>
+      <Grid container spacing={2}>
+          <Grid container item md={12} spacing={1}>
+            {top2lastest ? top2lastest.map(({
+              tieuDe,
+              anhGioiThieu,
+              slug,
+              the_loai
+            }) => {
+              const url = anhGioiThieu?.url ?? ''
+              const name = the_loai?.name ?? '';
+              return (
+                <Grid item md={6} sm={6} xs={6} key={slug}>
+                    <Link href={`/${name}/${slug}`}>
+                      <a>
+                      <img className="top2_image"  src={`${baseUrl}${url}`} alt="mota"/>
+                      <h4>{tieuDe}</h4>
+                      </a>
+                    </Link>
+                </Grid>
+              )
+            }) : null}
           </Grid>
-          <Grid container item md={12}>
-
+          <Grid container item md={12} spacing={1}>
+          {top4lastest ? top4lastest.map(({
+              tieuDe,
+              anhGioiThieu,
+              slug,
+              the_loai
+            }) => {
+              const url = anhGioiThieu?.url ?? '';
+              const name = the_loai?.name ?? '';
+              return (
+                <Grid item md={3} sm={6} xs={6} key={slug}>
+                    <Link href={`/${name}/${slug}`}>
+                      <a>
+                       <img className="top4_image" width="100%" src={`${baseUrl}${url}`} alt="mota"/>
+                       <h4>{tieuDe}</h4>
+                      </a>
+                    </Link>
+                </Grid>
+              )
+            }) : null}
           </Grid>
         </Grid>
-        
-      </div>
-      <Homenews>
       <Grid container spacing={2}>
         <Grid item sm={9} xs={12}>
           <div className="homenews_title">
@@ -224,30 +328,48 @@ const Trang = ({ posts: initialPosts, adsPoster1 }) => {
             }) => {
               const { name } = the_loai || '';
               return (
-                <Link href={`/${name}/${slug}`} key={slug}>
-                  <a>
-                    <span>
+                <div key={slug}>
+                  <span>
                     <Box className="news_item " >
-                  <Hidden smUp><h3>{tieuDe}</h3></Hidden>
-                  <Grid container spacing={2}>
-                    <Grid  item xs={7} sm={4}>
-                      <div> <img className="item_image" src={anhGioiThieu ?`${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd"  /></div>
-                    </Grid>
-                    <Grid item xs={5} sm={8}>
-                    <Hidden only={['xs']}><h3>{tieuDe}</h3></Hidden>
-                      <div>Ngày đăng: {getDate(published_at)}</div>
-                      <div className="item_desc">{mota}</div>
-                    </Grid>
-                  </Grid>
-                </Box>
-                    </span>
-                  </a>
-                </Link>
+                      <Hidden smUp>
+                        <Link href={`/${name}/${slug}`} >
+                          <a>
+                            <h3>{tieuDe}</h3>
+                          </a>
+                        </Link>
+                      </Hidden>
+                      <Grid container spacing={2}>
+                        <Grid item xs={7} sm={4}>
+                          <div>
+                            <Link href={`/${name}/${slug}`}>
+                              <a>
+                                <img className="item_image" src={anhGioiThieu ? `${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd" />
+                              </a>
+                            </Link>
+                          </div>
+                        </Grid>
+                        <Grid item xs={5} sm={8}>
+                          <Hidden only={['xs']}>
+                            <Link href={`/${name}/${slug}`}>
+                              <a>
+                                <h3>{tieuDe}</h3>
+                              </a>
+                            </Link>
+                          </Hidden>
+                          <div>Ngày đăng: {getDate(published_at)}</div>
+                          <div className="item_desc">{mota}</div>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </span>
+                </div>
               )
             }) : null}
           </div>
           <div className="loadmore">
-            <Button disabled={waiting} onClick={handleLoadMore}>{waiting ? 'Đang tải': 'Xem thêm'}</Button>
+            {
+              numPosts === posts.length ? null :  <Button disabled={waiting} onClick={handleLoadMore}>{waiting ? 'Đang tải': 'Xem thêm'}</Button>
+            }
           </div>
         </Grid>
         <Hidden smDown>
@@ -259,12 +381,12 @@ const Trang = ({ posts: initialPosts, adsPoster1 }) => {
                 marginBottom: '3rem'
               }}
             >
-              <img src={`${baseUrl}${urlImage}`} alt="lien-he-quang-cao-yeu-vivu" width="100%"/>
+              <img src={`${baseUrl}${ads1}`} alt="lien-he-quang-cao-yeu-vivu" width="100%"/>
             </div>
             <div
-              className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
+              // className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
             >
-              <img src={`${baseUrl}${urlImage}`} alt="lien-he-quang-cao-yeu-vivu" width="100%"/>
+              <img src={`${baseUrl}${ads2}`} alt="lien-he-quang-cao-yeu-vivu" width="100%"/>
             </div>
           </div>
         </Grid>
@@ -278,21 +400,13 @@ const Trang = ({ posts: initialPosts, adsPoster1 }) => {
 Trang.propTypes = {};
 
 Trang.getInitialProps = async (ctx) => {
-  const posts = (await getPostByType("diem-den", 1)) || []
-  const adsPoster1 = await getAdsPoster1();
-  const adsPoster2 = await getAdsPoster2();
-  const profileImage = await getProfileImage();
-  const groupBanner = await getGroupBanner();
-  const seoContent = await getHomepageSeo();
+  const posts = (await getPostByType("diem-den", 1)) || [];
   const posters = await getPosters();
+  const allPosts = await countPostsByType("diem-den");
   return {
-    posts,
-    adsPoster1,
-    adsPoster2, 
-    profileImage,
-    groupBanner,
-    seoContent,
-    posters
+    posts: _.reverse(_.orderBy(posts, ['published_at'])),
+    posters,
+    allPosts
   }
 }
 

@@ -97,11 +97,17 @@ const Homenews = styled.div`
  
 `;
 
-const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
+const HomeNews = ({
+  posts: initialPosts,
+  adsPoster1,
+  adsPoster2,
+  allPosts
+}) => {
   const baseUrl = BACKEND();
   const [is_floating, setIs_floating] = useState(false);
   const [waiting, setWaiting] = useState(false);
-  const urlImage = adsPoster1 ? adsPoster1.url : '';
+  const ads1 = adsPoster1?.url ?? '';
+  const ads2 = adsPoster2?.url ?? '';
   const [posts, setPosts] = useState(initialPosts);
   const [num, setNum] = useState(2);
   const toggleVisibility = () => {
@@ -118,11 +124,11 @@ const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
     });
   }, []);
   const handleLoadMore = async () => {
-      setWaiting(true)
-      const newPosts = await getAllPostsForHome(num);
-      setPosts((prev) => ([...prev, ...newPosts ]));
-      setWaiting(false)
-      setNum((prev) => prev +=1 );
+    setWaiting(true)
+    const newPosts = await getAllPostsForHome(num);
+    setPosts((prev) => ([...prev, ...newPosts]));
+    setWaiting(false)
+    setNum((prev) => prev += 1);
   };
   return (
     <Homenews>
@@ -132,61 +138,80 @@ const HomeNews = ({ posts: initialPosts, adsPoster1 }) => {
             <h3>Tin dành cho bạn</h3>
           </div>
           <div className="news_list">
-            {posts && posts.length ? _.map(posts, ({ 
+            {posts && posts.length ? _.map(posts, ({
               tieuDe,
               anhGioiThieu,
               slug,
               tags,
               published_at,
-              mota, 
+              mota,
               the_loai
             }) => {
               const { name } = the_loai || '';
               return (
-                <Link href={`/${name}/${slug}`} key={slug}>
-                  <a>
-                    <span>
+                <div key={slug}>
+                  <span>
                     <Box className="news_item " >
-                  <Hidden smUp><h3>{tieuDe}</h3></Hidden>
-                  <Grid container spacing={2}>
-                    <Grid  item xs={7} sm={4}>
-                      <div> <img className="item_image" src={anhGioiThieu ?`${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd"  /></div>
-                    </Grid>
-                    <Grid item xs={5} sm={8}>
-                    <Hidden only={['xs']}><h3>{tieuDe}</h3></Hidden>
-                      <div>Ngày đăng: {getDate(published_at)}</div>
-                      <div className="item_desc">{mota}</div>
-                    </Grid>
-                  </Grid>
-                </Box>
-                    </span>
-                  </a>
-                </Link>
+                      <Hidden smUp>
+                        <Link href={`/${name}/${slug}`} >
+                          <a>
+                            <h3>{tieuDe}</h3>
+                          </a>
+                        </Link>
+                      </Hidden>
+                      <Grid container spacing={2}>
+                        <Grid item xs={7} sm={4}>
+                          <div>
+                            <Link href={`/${name}/${slug}`}>
+                              <a>
+                                <img className="item_image" src={anhGioiThieu ? `${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd" />
+                              </a>
+                            </Link>
+                          </div>
+                        </Grid>
+                        <Grid item xs={5} sm={8}>
+                          <Hidden only={['xs']}>
+                            <Link href={`/${name}/${slug}`}>
+                              <a>
+                                <h3>{tieuDe}</h3>
+                              </a>
+                            </Link>
+                          </Hidden>
+                          <div>Ngày đăng: {getDate(published_at)}</div>
+                          <div className="item_desc">{mota}</div>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </span>
+
+                </div>
               )
             }) : null}
           </div>
           <div className="loadmore">
-            <Button disabled={waiting} onClick={handleLoadMore}>{waiting ? 'Đang tải': 'Xem thêm'}</Button>
+            {
+              posts.length === allPosts ? null : <Button disabled={waiting} onClick={handleLoadMore}>{waiting ? 'Đang tải' : 'Xem thêm'}</Button>
+            }
           </div>
         </Grid>
         <Hidden smDown>
-        <Grid item sm={3} xs={12}>
-          <div>
-            <div
-              className="right_topBanner"
-              style={{
-                marginBottom: '3rem'
-              }}
-            >
-              <img src={`${baseUrl}${urlImage}`} alt="lien-he-quang-cao-yeu-vivu" width="100%"/>
+          <Grid item sm={3} xs={12}>
+            <div>
+              <div
+                className="right_topBanner"
+                style={{
+                  marginBottom: '3rem'
+                }}
+              >
+                <img src={`${baseUrl}${ads1}`} alt="lien-he-quang-cao-yeu-vivu" width="100%" />
+              </div>
+              <div
+                className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
+              >
+                <img src={`${baseUrl}${ads2}`} alt="lien-he-quang-cao-yeu-vivu" width="100%" />
+              </div>
             </div>
-            <div
-              className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
-            >
-              <img src={`${baseUrl}${urlImage}`} alt="lien-he-quang-cao-yeu-vivu" width="100%"/>
-            </div>
-          </div>
-        </Grid>
+          </Grid>
         </Hidden>
       </Grid>
     </Homenews>

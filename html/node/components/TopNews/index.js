@@ -21,8 +21,8 @@ const Wrapper = styled.div`
     }
   }
   .groupBanner {
-    margin: 2rem 0;
-    padding: 5rem;
+    // margin: 2rem 0;
+    padding: 2rem;
     display: flex;
     justify-content: center;
   }
@@ -33,8 +33,9 @@ const Topnews = ({ posts, adsPoster1, groupBanner}) => {
   const top4lastest = posts ? posts.slice(0, 4) : null;
   const top3lastest = posts ? posts.slice(1, 4) : null;
   const top6lastest = posts ? posts.slice(0, 6) : null;
-  const lastest = top4lastest ? top4lastest[1] : null;
-  const urlImage = adsPoster1  ? adsPoster1.url : '';
+  const lastest = top4lastest ? top4lastest[0] : null;
+  const urlImage = adsPoster1?.url ?? '';
+
   const groupBannerUrl = groupBanner  ? groupBanner.url : '';
   return (
     <>

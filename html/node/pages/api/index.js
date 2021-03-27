@@ -155,7 +155,7 @@ export async function getAllPostsWithSlug() {
 export async function getAllPostsForHome(number) {
   const data = await fetchAPI(
     ` query {
-            baiViets(start: ${number*4 -4}, limit: 4) {
+            baiViets(sort: "published_at:desc", start: ${number*9 -9}, limit: 9) {
               tieuDe,
               anhGioiThieu {
                 url
@@ -203,6 +203,17 @@ export async function getAllSearchPosts() {
   );
   return data?.baiViets;
 }
+export async function countAllPosts() {
+  const data = await fetchAPI(
+    ` query {
+      baiViets {
+        id,
+      }
+    }`,
+  );
+  return data?.baiViets.length;
+}
+
 export async function getPostByType(name, number, mien) {
   const where = {
     the_loai: {
@@ -213,7 +224,7 @@ export async function getPostByType(name, number, mien) {
   const data = await fetchAPI(
          `
             query PostByType($where: JSON)  {
-            baiViets(where: $where, start: ${number*4 - 4}, limit: 4){
+            baiViets(sort: "published_at:desc", where: $where, start: ${number*9 - 9}, limit: 9){
             tieuDe,
             anhGioiThieu {
                 url
@@ -240,6 +251,29 @@ export async function getPostByType(name, number, mien) {
     }
   );
   return data?.baiViets;
+}
+export async function countPostsByType(name, mien) {
+  const where = {
+    the_loai: {
+      name
+    },
+  }
+  if(mien) _.set(where, 'mien.ten', mien);
+  const data = await fetchAPI(
+         `
+            query PostByType($where: JSON)  {
+            baiViets(sort: "published_at:desc", where: $where){
+            id
+         }
+      }
+    `,
+    {
+      variables: {
+        where
+      },
+    }
+  );
+  return data?.baiViets.length;
 }
 
 export async function getPostAndMorePosts(slug, preview) {
@@ -274,3 +308,4 @@ export async function getPostAndMorePosts(slug, preview) {
  );
   return data;
 }
+

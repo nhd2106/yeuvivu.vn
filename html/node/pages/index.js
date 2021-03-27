@@ -1,22 +1,22 @@
-import Head from "next/head";
 import { NextSeo } from 'next-seo';
+import _ from 'lodash';
+
 import TopNews from '../components/TopNews';
 import HomeNews from '../components/HomeNews';
+
 import {
   getAllPostsForHome,
-  getAdsPoster1,
-  getAdsPoster2,
-  getGroupBanner,
-  getProfileImage,
   getHomepageSeo,
-  getPosters
+  getPosters,
+  countAllPosts
 } from './api';
 
 
 function Home({
   posts,
   seoContent,
-  posters
+  posters,
+  allPosts
  }) {
    const {
      ads1: adsPoster1,
@@ -24,6 +24,7 @@ function Home({
      groupbanner,
      instagram: profileImage
    } = posters;
+
   const { 
     title,
     keywords,
@@ -66,9 +67,7 @@ function Home({
         posts={posts}
         adsPoster1={adsPoster1}
         adsPoster2={adsPoster2}
-        profileImage={profileImage}
-        groupBanner={groupbanner}
-        
+        allPosts={allPosts}
         />
 
       </section>
@@ -94,20 +93,14 @@ function Home({
 
 Home.getInitialProps = async (ctx) => {
   const posts = (await getAllPostsForHome(1)) || [];
-  const adsPoster1 = await getAdsPoster1();
-  const adsPoster2 = await getAdsPoster2();
-  const profileImage = await getProfileImage();
-  const groupBanner = await getGroupBanner();
   const seoContent = await getHomepageSeo();
   const posters = await getPosters();
+  const allPosts = await countAllPosts();
   return {
-    posts,
-    adsPoster1,
-    adsPoster2, 
-    profileImage,
-    groupBanner,
+    posts: _.reverse(_.orderBy(posts, ['published_at'])),
     seoContent,
-    posters
+    posters,
+    allPosts
   }
 }
 export default Home;

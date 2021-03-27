@@ -14,7 +14,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
-import { getPostAndMorePosts } from '../api/index';
+import { getPostAndMorePosts, getPosters } from '../api/index';
 
   const Wrapper = styled.div`
     .cover-style:before {
@@ -50,7 +50,7 @@ const pageTitleMapping = {
 };
 
 
-function Post({ preview, post }) {
+function Post({ posters, post }) {
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -117,11 +117,12 @@ function Post({ preview, post }) {
 
 Post.getInitialProps = async (ctx) => {
   const data = await getPostAndMorePosts(ctx.query.slug);
-  
+  const posters = await getPosters();
   return {
     post: {
       ...data?.baiViets[0],
     },
+    posters
   }
 }
 
