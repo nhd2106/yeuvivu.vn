@@ -30,16 +30,15 @@ function Home({
     title,
     keywords,
     image,
-    description,
+    desccription,
   } = seoContent;
-
   const   {
     url,
     alternativeText
   } = image || '';
   const SEO = {
     title,
-    description,
+    description: desccription,
     keywords,
     openGraph: {
       title,
