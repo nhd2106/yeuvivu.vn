@@ -4,17 +4,17 @@ import { Container } from "@material-ui/core";
 import styled from 'styled-components';
 
 const FooterStyles = styled.div`
-// background: #F4AE15;
+background: #F7F7F4;
   // height: 45vh;
-  // color: white;
+  color: black;
   .footer {
-    // width: 80%;
-    // margin: auto;
+    width: 80%;
+    margin: auto;
     padding: 5rem 0;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    border-top: 1px solid #D8D8D8;
+    // border-top: 1px solid #D8D8D8;
     border-bottom: 1px solid #D8D8D8;
     .right {
       display: flex;
@@ -55,12 +55,19 @@ const FooterStyles = styled.div`
     flex-direction: column;
     padding-bottom: 2rem;
   }
+  .ads{
+    width: 60%;
+  }
+  .heading {
+    font-size: 20px;
+    font-weight: 600;
+  }
 `;
 
 export default function Footer() {
   return (
     <>
-      <FooterStyles className="container">
+      <FooterStyles >
         <div className="footer">
           <div className="left">
             <div>
@@ -90,7 +97,7 @@ export default function Footer() {
           </div>
           <div className="right">
             <div>
-              <h2>Cần trợ giúp?</h2>
+              <div className="heading">Cần trợ giúp?</div>
               <div className="helps">
                 <Link href="/tro-giup">
                   <a>. Đặt chỗ thế nào</a>
@@ -106,8 +113,13 @@ export default function Footer() {
                 </Link>
               </div>
             </div>
-            <div>
-              <h2>Liên hệ quảng cáo?</h2>
+            <div className="ads">
+              <div className="heading">Facebook fanpage</div>
+              <div class="fb-page"
+                data-href="https://www.facebook.com/yeuvivuvietnam"
+                data-width="380"
+                data-hide-cover="false"
+                data-show-facepile="true"></div>
             </div>
           </div>
         </div>

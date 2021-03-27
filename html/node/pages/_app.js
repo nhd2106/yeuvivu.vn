@@ -74,6 +74,8 @@ function App({ Component, pageProps }) {
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"></link>
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"></link>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="ywbB34Xn"></script>
+
       </Head>
       <StylesProvider injectFirst>
         <DefaultSeo {...SEO} />
@@ -81,6 +83,7 @@ function App({ Component, pageProps }) {
         <Header />
 
         <Component {...pageProps} />
+
         {is_visible ? (
           <Button
             variant="contained"

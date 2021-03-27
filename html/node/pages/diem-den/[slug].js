@@ -9,7 +9,9 @@ import Link from "next/link";
 import styled from 'styled-components';
 import _ from 'lodash';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import Facebook from '@material-ui/icons/Facebook';
 import Hidden from '@material-ui/core/Hidden';
+import Button from '@material-ui/core/Button';
 
 import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
@@ -36,15 +38,19 @@ import { getPostAndMorePosts, getPosters } from '../api/index';
      h1 {
        font-size: 27.2px;
      }
-     .tags {
-       border-bottom: 1px solid #EEEEEE;
-       margin-bottom: 1rem;
-       padding-bottom: 1rem;
-     }
      i {
        font-weight: 500;
      }
    }
+   .shareButtons {
+    border-bottom: 1px solid #EEEEEE;
+    margin: 1rem 0;
+    padding-bottom: 1rem;
+    }
+   .bottomShareButtons {
+    margin: 1rem 0;
+    padding-bottom: 1rem;
+    }
    .date {
      display: inline-flex;
      align-items: center;
@@ -76,7 +82,7 @@ function Post({ posters, post }) {
   const tieuDe = post ? post.tieuDe : "";
   const mota = post ? post.mota : "";
   const groupBanner = posters?.groupbanner?.url ?? "";
-
+  console.log(router.asPath)
   const render = useMemo(() => {
     if (post) return { __html: post.noiDung };
   }, [post]);
@@ -129,6 +135,11 @@ function Post({ posters, post }) {
               fontSize: '12px'
             }}/><span>{getDate(post?.published_at)}</span></span>
           </div>
+          <div className="shareButtons">
+              <Button startIcon={<Facebook />} variant="contained" color="primary" size="small" onClick={() => {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=https://yeuvivu.vn${router.asPath}`, "MsgWindow" , 'width=600,height=800')
+              }}>chia sẻ</Button>
+          </div>
           <div>
             <i>{`"${mota}"`}</i>
           </div>
@@ -136,6 +147,11 @@ function Post({ posters, post }) {
         <div className='post-content'
           dangerouslySetInnerHTML={render}
         />
+        <div className="bottomShareButtons">
+              <Button startIcon={<Facebook />} variant="contained" color="primary" size="small" onClick={() => {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=https://yeuvivu.vn${router.asPath}`, "MsgWindow" , 'width=600,height=800')
+              }}>chia sẻ</Button>
+        </div>
       </BlogStyles>
     </Wrapper>
   );
