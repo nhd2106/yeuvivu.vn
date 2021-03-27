@@ -1,7 +1,7 @@
 export default {
     title : "Yêu Vivu",
     titleTemplate : 'Yêu Vivu | %s',
-    canonical: 'https://www.yeuvivu.vn/',
+    canonical: 'https://yeuvivu.vn/',
     openGraph: {
         type: 'website',
         locale: 'vi_VN',
