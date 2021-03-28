@@ -5,6 +5,7 @@ import ErrorPage from 'next/error'
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 
 import styled from 'styled-components';
 import _ from 'lodash';
@@ -92,6 +93,7 @@ function Post({ posters, post, linksAndPhone }) {
 
   const tieuDe = post ? post.tieuDe : "";
   const mota = post ? post.mota : "";
+  const keywords = post ? post.keywords : "";
   const groupBanner = posters?.groupbanner?.url ?? "";
   const tu_van_poster = posters?.tu_van_poster?.url ?? "";
 
@@ -107,6 +109,8 @@ function Post({ posters, post, linksAndPhone }) {
   const imageSeo = post && post.anhGioiThieu ? post.anhGioiThieu.url : '';
   const SEO = {
     title: post ? post.tieuDe : '',
+    description: mota,
+    canonical: `https://yeuvivu.vn${router.asPath}`,
     openGraph: {
       title: post ? `Yêu vivu | ${post.tieuDe}` : '',
       type: 'Blog',
@@ -126,6 +130,9 @@ function Post({ posters, post, linksAndPhone }) {
   return (
     <Wrapper className="container1">
       <NextSeo {...SEO}/>
+      <Head>
+        <meta name="keywords" content={`${keywords}`} />
+      </Head>
       <Hidden smDown>
           <div  className="groupBanner">
               <img src={`${baseUrl}${groupBanner}`} alt="group-banner" width="100%"/>

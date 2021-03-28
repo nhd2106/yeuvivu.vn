@@ -17,6 +17,7 @@ import { Breadcrumbs } from "../../components";
 import { BACKEND } from '../../libs/config';
 import { getDate } from '../../libs/utils';
 import { getPostAndMorePosts, getPosters, getLinksAndPhone } from '../api/index';
+import Head from "next/head";
 
 const Wrapper = styled.div`
     margin-bottom: 1rem;
@@ -106,6 +107,8 @@ function Post({ posters, post, linksAndPhone }) {
   const imageSeo = post && post.anhGioiThieu ? post.anhGioiThieu.url : '';
   const SEO = {
     title: post ? post.tieuDe : '',
+    description: mota,
+    canonical: `https://yeuvivu.vn${router.asPath}`,
     openGraph: {
       title: post ? `Yêu vivu | ${post.tieuDe}` : '',
       type: 'Blog',
@@ -125,6 +128,9 @@ function Post({ posters, post, linksAndPhone }) {
   return (
     <Wrapper className="container1">
       <NextSeo {...SEO}/>
+      <Head>
+        <meta name="keywords" content={`${keywords}`} />
+      </Head>
       <Hidden smDown>
           <div  className="groupBanner">
               <img src={`${baseUrl}${groupBanner}`} alt="group-banner" width="100%"/>
