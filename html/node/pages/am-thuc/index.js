@@ -54,10 +54,16 @@ const Wrapper = styled.div`
     .top2_image {
       width: 100%;
       height: 40vh;
+      object-fit: cover;
+      max-width: 100%;
+      object-position: center center;
     }
     .top4_image {
       width: 100%;
       height: 20vh;
+      object-fit: cover;
+      max-width: 100%;
+      object-position: center center;
     }
     @media (max-width: 768px) {
       .top2_image {
@@ -231,7 +237,8 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
   const SEO = {
     title,
     keywords: 'keywords',
-    description: '',
+    description: `Yêu Vivu | ${title}`,
+    canonical: `https://yeuvivu.vn${router.asPath}`,
     openGraph: {
       title,
       type: 'Blog',

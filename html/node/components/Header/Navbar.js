@@ -231,7 +231,7 @@ export default function DNavbar({ linksAndPhone }) {
               <Facebook />
             </IconButton>
             <IconButton
-              onClick={() => window.open('https://facebook.com/yeuvivuvietnam')}
+              onClick={() => window.open(`${linksAndPhone?.instagram ?? ""}`)}
               edge="start"
               className={classes.contactButton}
               color="blue"
