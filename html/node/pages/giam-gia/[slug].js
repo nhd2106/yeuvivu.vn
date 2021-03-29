@@ -95,6 +95,7 @@ function Post({ posters, post, linksAndPhone }) {
   const mota = post ? post.mota : "";
   const groupBanner = posters?.groupbanner?.url ?? "";
   const tu_van_poster = posters?.tu_van_poster?.url ?? "";
+  const keywords = post ? post.keywords : "";
 
   const render = useMemo(() => {
     if (post) return { __html: post.noiDung };

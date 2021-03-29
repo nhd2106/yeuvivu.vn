@@ -113,7 +113,7 @@ export default function Footer({ linksAndPhone }) {
             </Grid>
             <Grid item md={4} xs={12} className="ads">
               <div className="heading">Facebook fanpage</div>
-              <div class="fb-page"
+              <div className="fb-page"
                 data-href="https://www.facebook.com/yeuvivuvietnam"
                 data-width="300"
                 data-hide-cover="false"

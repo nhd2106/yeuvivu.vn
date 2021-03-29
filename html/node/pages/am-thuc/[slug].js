@@ -90,9 +90,10 @@ function Post({ posters, post, linksAndPhone }) {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
-  const { slug, Trang } = router.query;
+
   const tieuDe = post ? post.tieuDe : "";
   const mota = post ? post.mota : "";
+  const keywords = post ? post.keywords : "";
   const groupBanner = posters?.groupbanner?.url ?? "";
   const tu_van_poster = posters?.tu_van_poster?.url ?? "";
 

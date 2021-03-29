@@ -213,7 +213,6 @@ export default function DNavbar({ linksAndPhone }) {
             <IconButton
               edge="start"
               className={classes.contactButton}
-              color="blue"
               aria-label="menu"
               size="small"
             >
@@ -224,7 +223,7 @@ export default function DNavbar({ linksAndPhone }) {
               onClick={() => window.open(`${linksAndPhone?.facebook ?? ""}`)}
               edge="start"
               className={classes.contactButton}
-              color="blue"
+              color="primary"
               aria-label="menu"
               size="small"
             >
@@ -234,7 +233,6 @@ export default function DNavbar({ linksAndPhone }) {
               onClick={() => window.open(`${linksAndPhone?.instagram ?? ""}`)}
               edge="start"
               className={classes.contactButton}
-              color="blue"
               aria-label="menu"
               size="small"
             >
