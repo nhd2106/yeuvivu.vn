@@ -20,7 +20,7 @@ const CustomizedBreadCrumns = ({ slugNTitle }) => {
           ? slugNTitle.map(({ slug, title }) => (
              slug ?  <Link href={slug} key={slug}>
              <a>{title}</a>
-           </Link> : <Typography>{title}</Typography>
+           </Link> : <Typography key={slug}>{title}</Typography>
             ))
           : null}
       </Breadcrumbs>
