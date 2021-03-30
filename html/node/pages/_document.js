@@ -14,22 +14,48 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
           <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=UA-192114972-1" >
-</script>
-<script dangerouslySetInnerHTML={
-    { __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){window.dataLayer.push(arguments)}
-        gtag("js", new Date());
-        gtag("config", "UA-192114972-1");
-    `}
-}>
-</script>
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=UA-192114972-1" >
+          </script>
+          <script dangerouslySetInnerHTML={
+              { __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){window.dataLayer.push(arguments)}
+                  gtag("js", new Date());
+                  gtag("config", "UA-192114972-1");
+              `}
+          }>
+          </script>
         </Head>
         <body>
           <Main />
           <NextScript />
+      <div id="fb-root"></div>
+      <script dangerouslySetInnerHTML={
+              { __html: `
+              window.fbAsyncInit = function() {
+                FB.init({
+                  xfbml            : true,
+                  version          : 'v10.0'
+                });
+              };
+      
+              (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+              `}
+          }>
+        </script>
+
+ 
+      <div class="fb-customerchat"
+        attribution="setup_tool"
+        page_id="104104601783421">
+      </div>
           
         </body>
       </Html>

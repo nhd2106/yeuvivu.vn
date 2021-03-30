@@ -82,6 +82,7 @@ function App({ Component, pageProps }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"></link>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
         <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="ywbB34Xn"></script>
+        <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js"></script>
 
       </Head>
       <StylesProvider injectFirst>
