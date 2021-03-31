@@ -52,7 +52,7 @@ export default class MyDocument extends Document {
         </script>
 
  
-      <div class="fb-customerchat"
+      <div className="fb-customerchat"
         attribution="setup_tool"
         page_id="104104601783421">
       </div>

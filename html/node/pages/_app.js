@@ -20,13 +20,13 @@ import { getLinksAndPhone } from './api';
 const useStyles = makeStyles({
   button: {
     position: "fixed",
-    bottom: "10%",
+    bottom: "14%",
     right: "1rem",
     boxShadow: "none",
     outline: "none",
     borderRadius: "50% 50%",
-    height: "3rem",
-    width: "3rem",
+    height: "2.5rem",
+    width: "2.5rem",
     minWidth: "unset",
   },
 });
