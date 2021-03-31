@@ -20,13 +20,13 @@ import { getLinksAndPhone } from './api';
 const useStyles = makeStyles({
   button: {
     position: "fixed",
-    bottom: "10%",
+    bottom: "14%",
     right: "1rem",
     boxShadow: "none",
     outline: "none",
     borderRadius: "50% 50%",
-    height: "3rem",
-    width: "3rem",
+    height: "2.5rem",
+    width: "2.5rem",
     minWidth: "unset",
   },
 });
@@ -72,16 +72,18 @@ function App({ Component, pageProps }) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="google-site-verification" content="dw2DXuLj4BThK7IfgcxvNgu_QBEV9VdSw_-S4cei_gU" />
+        {/* <meta name="google-site-verification" content="dw2DXuLj4BThK7IfgcxvNgu_QBEV9VdSw_-S4cei_gU" /> */}
+        <meta name="google-site-verification" content="U6QjPgRssVG5Mi1WVYxYiPzerwEqPoW21hz3eOGsZyc" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
-        <link rel="shortcut icon" href="/icons/favicon.ico" />
+        <link rel="shortcut icon" href="/yevivu.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png"></link>
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"></link>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="ywbB34Xn"></script>
+        <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="ywbB34Xn"></script>
+        <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js"></script>
 
       </Head>
       <StylesProvider injectFirst>
