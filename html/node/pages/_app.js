@@ -6,8 +6,6 @@ import { StylesProvider, makeStyles } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Router from "next/router";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";

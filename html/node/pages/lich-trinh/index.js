@@ -201,7 +201,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
 
   const handleLoadMore = async () => {
     setWaiting(true)
-    const newPosts = await getPostByType("lich-trinh", num, where);
+    const newPosts = await getPostByType("Lịch Trình", num, where);
     setPosts((prev) => ([...prev, ...newPosts]));
     setWaiting(false)
     setNum((prev) => prev += 1);
@@ -223,9 +223,9 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
 
   useEffect(async () => {
     if (where) {
-      const newPosts = await getPostByType("lich-trinh", 1, where);
+      const newPosts = await getPostByType("Lịch Trình", 1, where);
       setPosts(newPosts);
-      const newNumPosts = await countPostsByType("lich-trinh", where);
+      const newNumPosts = await countPostsByType("Lịch Trình", where);
       setNumPosts(newNumPosts);
     } else {
       setPosts(initialPosts);
@@ -430,9 +430,9 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
 Trang.propTypes = {};
 
 Trang.getInitialProps = async (ctx) => {
-  const posts = (await getPostByType("lich-trinh", 1)) || [];
+  const posts = (await getPostByType("Lịch Trình", 1)) || [];
   const posters = await getPosters();
-  const allPosts = await countPostsByType("lich-trinh");
+  const allPosts = await countPostsByType("Lịch Trình");
   return {
     posts: _.reverse(_.orderBy(posts, ['published_at'])),
     posters,
