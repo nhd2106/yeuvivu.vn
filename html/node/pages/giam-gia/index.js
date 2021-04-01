@@ -295,7 +295,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
               variant = 'contained';
             }
             return (
-              <Button variant={variant} size="small" className={`${classes.margin} ${active}`} onClick={() => handleTag(w?.where)}>
+              <Button key={w?.name} variant={variant} size="small" className={`${classes.margin} ${active}`} onClick={() => handleTag(w?.where)}>
             {w?.name}
           </Button>
             )

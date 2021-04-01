@@ -123,7 +123,7 @@ const Homenews = styled.div`
     }
   }
   .isfloating {
-    position: fixed;
+    position: sticky;
     top: 15%;
     bottom: 426px;
   }
@@ -213,7 +213,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
     setNum((prev) => prev += 1);
   };
   const toggleVisibility = () => {
-    if (window.pageYOffset > 1500) {
+    if (window.pageYOffset > 1000) {
       setIs_floating(true);
     } else {
       setIs_floating(false);
@@ -295,7 +295,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
               variant = 'contained';
             }
             return (
-              <Button variant={variant} size="small" className={`${classes.margin} ${active}`} onClick={() => handleTag(w?.where)}>
+              <Button key={w?.name} variant={variant} size="small" className={`${classes.margin} ${active}`} onClick={() => handleTag(w?.where)}>
             {w?.name}
           </Button>
             )
@@ -335,10 +335,10 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
               const url = anhGioiThieu?.url ?? '';
               const name = the_loai?.name ?? '';
               return (
-                <Grid item md={6} sm={6} xs={6} key={slug}>
+                <Grid item md={3} sm={6} xs={6} key={slug}>
                   <Link href={`/${getType(name)}/${slug}`}>
                     <a>
-                      <img className="top2_image" src={`${baseUrl}${url}`} alt="mota" />
+                      <img className="top4_image" src={`${baseUrl}${url}`} alt="mota" />
                       <h4>{tieuDe}</h4>
                     </a>
                   </Link>
@@ -420,7 +420,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
                   <img src={`${baseUrl}${ads1}`} alt="lien-he-quang-cao-yeu-vivu" width="100%" />
                 </div>
                 <div
-                // className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
+                className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
                 >
                   <img src={`${baseUrl}${ads2}`} alt="lien-he-quang-cao-yeu-vivu" width="100%" />
                 </div>
