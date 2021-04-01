@@ -16,3 +16,20 @@ export const getDate = (isoDate) => {
   }
   return `${dt}/${month}/${year}`;
 };
+
+export const getType = (name) => {
+  switch (name) {
+    case "Điểm Đến":
+      return 'diem-den'
+    case "Ẩm Thực":
+      return 'am-thuc'
+    case "Lịch Trình":
+      return 'lich-trinh'
+    case "Review":
+      return 'review'
+    case "Giảm Giá":
+      return 'giam-gia'
+    default:
+      break;
+  }
+}

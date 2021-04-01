@@ -10,7 +10,7 @@ import {
   Box
 } from "@material-ui/core";
 import { BACKEND } from '../../libs/config';
-import { getDate } from '../../libs/utils';
+import { getDate, getType } from '../../libs/utils';
 import { getAllPostsForHome } from '../../pages/api';
 
 const Homenews = styled.div`
@@ -153,7 +153,7 @@ const HomeNews = ({
                   <span>
                     <Box className="news_item " >
                       <Hidden smUp>
-                        <Link href={`/${name}/${slug}`} >
+                        <Link href={`/${getType(name)}/${slug}`} >
                           <a>
                             <h3>{tieuDe}</h3>
                           </a>
@@ -162,7 +162,7 @@ const HomeNews = ({
                       <Grid container spacing={2}>
                         <Grid item xs={7} sm={4}>
                           <div>
-                            <Link href={`/${name}/${slug}`}>
+                            <Link href={`/${getType(name)}/${slug}`}>
                               <a>
                                 <img className="item_image" src={anhGioiThieu ? `${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd" />
                               </a>
@@ -171,7 +171,7 @@ const HomeNews = ({
                         </Grid>
                         <Grid item xs={5} sm={8}>
                           <Hidden only={['xs']}>
-                            <Link href={`/${name}/${slug}`}>
+                            <Link href={`/${getType(name)}/${slug}`}>
                               <a>
                                 <h3>{tieuDe}</h3>
                               </a>

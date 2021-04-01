@@ -3,7 +3,8 @@ import Link from "next/link";
 import styled from "styled-components";
 import { Grid, Hidden } from "@material-ui/core";
 
-import { BACKEND } from '../../libs/config';
+import { BACKEND } from '../../libs/config'; 
+import { getType } from '../../libs/utils'; 
 
 const Wrapper = styled.div`
   padding: 1rem 0 3rem 0;
@@ -50,7 +51,7 @@ const Topnews = ({ posts, adsPoster1, groupBanner}) => {
           <Grid className="top-news" item xs={12} sm={6} md={8} lg={8}>
             <div style={{paddingBottom: '1rem'}}>
               {lastest ? (
-                <Link href={`/${lastest.the_loai.name}/${lastest.slug}`}>
+                <Link href={`/${getType(lastest.the_loai.name)}/${lastest.slug}`}>
                     <a>
                         <img
                         width="100%"
@@ -74,7 +75,7 @@ const Topnews = ({ posts, adsPoster1, groupBanner}) => {
                       the_loai: { name },
                     }) => (
                       <Link
-                        href={`/${name}/${slug}`}
+                        href={`/${getType(name)}/${slug}`}
                         key={slug}
                       >
                         <a>
@@ -96,7 +97,7 @@ const Topnews = ({ posts, adsPoster1, groupBanner}) => {
                       slug,
                       the_loai: { name },
                     }) => (
-                      <Link href={`/${name}/${slug}`}
+                      <Link href={`/${getType(name)}/${slug}`}
                         key={slug}
                       >
                         <a>

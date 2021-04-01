@@ -23,7 +23,7 @@ import {
   countPostsByType
 } from '../api';
 import { BACKEND } from '../../libs/config';
-import { getDate } from '../../libs/utils';
+import { getDate, getType } from '../../libs/utils';
 
 
 const Wrapper = styled.div`
@@ -170,10 +170,15 @@ const useStyles = makeStyles((theme) => ({
 
 const wheres = [
   { name: 'tất cả' },
-  { where: 'bac', name: 'bắc' },
-  { where: 'trung', name: 'trung' },
-  { where: 'nam', name: 'nam' },
+  { where: 'bac', name: 'Bắc' },
+  { where: 'trung', name: 'Trung' },
+  { where: 'nam', name: 'Nam' },
 ];
+const mappingWhere = {
+  bac: "Bắc",
+  trung: "Trung",
+  bac: "Nam",
+}
 
 const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
   const baseUrl = BACKEND();
@@ -223,9 +228,9 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
 
   useEffect(async () => {
     if (where) {
-      const newPosts = await getPostByType("Ẩm Thực", 1, where);
+      const newPosts = await getPostByType("Ẩm Thực", 1, mappingWhere[where]);
       setPosts(newPosts);
-      const newNumPosts = await countPostsByType("Ẩm Thực", where);
+      const newNumPosts = await countPostsByType("Ẩm Thực", mappingWhere[where]);
       setNumPosts(newNumPosts);
     } else {
       setPosts(initialPosts);
@@ -309,7 +314,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
               const name = the_loai?.name ?? '';
               return (
                 <Grid item md={6} sm={6} xs={6} key={slug}>
-                  <Link href={`/${name}/${slug}`}>
+                  <Link href={`/${getType(name)}/${slug}`}>
                     <a>
                       <img className="top2_image" src={`${baseUrl}${url}`} alt="mota" />
                       <h4>{tieuDe}</h4>
@@ -330,7 +335,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
               const name = the_loai?.name ?? '';
               return (
                 <Grid item md={3} sm={6} xs={6} key={slug}>
-                  <Link href={`/${name}/${slug}`}>
+                  <Link href={`/${getType(name)}/${slug}`}>
                     <a>
                       <img className="top4_image" width="100%" src={`${baseUrl}${url}`} alt="mota" />
                       <h4>{tieuDe}</h4>
@@ -362,7 +367,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
                     <span>
                       <Box className="news_item " >
                         <Hidden smUp>
-                          <Link href={`/${name}/${slug}`} >
+                          <Link href={`/${getType(name)}/${slug}`} >
                             <a>
                               <h3>{tieuDe}</h3>
                             </a>
@@ -371,7 +376,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
                         <Grid container spacing={2}>
                           <Grid item xs={7} sm={4}>
                             <div>
-                              <Link href={`/${name}/${slug}`}>
+                              <Link href={`/${getType(name)}/${slug}`}>
                                 <a>
                                   <img className="item_image" src={anhGioiThieu ? `${baseUrl}${anhGioiThieu.url}` : ''} alt="sdsdsd" />
                                 </a>
@@ -380,7 +385,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
                           </Grid>
                           <Grid item xs={5} sm={8}>
                             <Hidden only={['xs']}>
-                              <Link href={`/${name}/${slug}`}>
+                              <Link href={`/${getType(name)}/${slug}`}>
                                 <a>
                                   <h3>{tieuDe}</h3>
                                 </a>
