@@ -123,9 +123,8 @@ const Homenews = styled.div`
     }
   }
   .isfloating {
-    position: fixed;
-    top: 15%;
-    bottom: 426px;
+    position: sticky;
+    top: 10%;
   }
   .item_desc {
     overflow: hidden;
@@ -178,7 +177,7 @@ const wheres = [
 const mappingWhere = {
   bac: "Bắc",
   trung: "Trung",
-  bac: "Nam",
+  nam: "Nam",
 }
 
 const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
@@ -410,8 +409,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
           </Grid>
           <Hidden smDown>
             <Grid item sm={3} xs={12}>
-              <div>
-                <div
+            <div
                   className="right_topBanner"
                   style={{
                     marginBottom: '3rem'
@@ -420,11 +418,10 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
                   <img src={`${baseUrl}${ads1}`} alt="lien-he-quang-cao-yeu-vivu" width="100%" />
                 </div>
                 <div
-                // className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
+                className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
                 >
                   <img src={`${baseUrl}${ads2}`} alt="lien-he-quang-cao-yeu-vivu" width="100%" />
                 </div>
-              </div>
             </Grid>
           </Hidden>
         </Grid>

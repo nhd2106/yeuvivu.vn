@@ -57,9 +57,8 @@ const Homenews = styled.div`
     }
   }
   .isfloating {
-    position: fixed;
-    top: 15%;
-    bottom: 10%
+    position: sticky;
+    top: 10%;
   }
   .item_desc {
     overflow: hidden;
@@ -111,7 +110,7 @@ const HomeNews = ({
   const [posts, setPosts] = useState(initialPosts);
   const [num, setNum] = useState(2);
   const toggleVisibility = () => {
-    if (window.pageYOffset > 1500 && window.pageYOffset < -10) {
+    if (window.pageYOffset > 1350) {
       setIs_floating(true);
     } else {
       setIs_floating(false);
@@ -196,7 +195,6 @@ const HomeNews = ({
         </Grid>
         <Hidden smDown>
           <Grid item sm={3} xs={12}>
-            <div>
               <div
                 className="right_topBanner"
                 style={{
@@ -210,7 +208,6 @@ const HomeNews = ({
               >
                 <img src={`${baseUrl}${ads2}`} alt="lien-he-quang-cao-yeu-vivu" width="100%" />
               </div>
-            </div>
           </Grid>
         </Hidden>
       </Grid>

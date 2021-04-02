@@ -124,8 +124,7 @@ const Homenews = styled.div`
   }
   .isfloating {
     position: sticky;
-    top: 15%;
-    bottom: 426px;
+    top: 10%;
   }
   .item_desc {
     overflow: hidden;
@@ -178,7 +177,7 @@ const wheres = [
 const mappingWhere = {
   bac: "Bắc",
   trung: "Trung",
-  bac: "Nam",
+  nam: "Nam",
 }
 
 const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
@@ -213,7 +212,8 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
     setNum((prev) => prev += 1);
   };
   const toggleVisibility = () => {
-    if (window.pageYOffset > 1000) {
+    console.log(window.pageYOffset)
+    if (window.pageYOffset > 1350) {
       setIs_floating(true);
     } else {
       setIs_floating(false);
@@ -410,8 +410,7 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
           </Grid>
           <Hidden smDown>
             <Grid item sm={3} xs={12}>
-              <div>
-                <div
+            <div
                   className="right_topBanner"
                   style={{
                     marginBottom: '3rem'
@@ -422,9 +421,8 @@ const Trang = ({ posts: initialPosts, posters, allPosts: initialNumPosts }) => {
                 <div
                 className={`right_topBanner ${is_floating ? 'isfloating' : ''}`}
                 >
-                  <img src={`${baseUrl}${ads2}`} alt="lien-he-quang-cao-yeu-vivu" width="100%" />
+                  <img width="100%" src={`${baseUrl}${ads2}`} alt="lien-he-quang-cao-yeu-vivu" width="100%" />
                 </div>
-              </div>
             </Grid>
           </Hidden>
         </Grid>
